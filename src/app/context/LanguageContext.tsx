@@ -124,6 +124,7 @@ const translations: Record<Locale, Record<string, string>> = {
     portfolioHeading: "Featured projects",
     portfolioDescription:
       "A glimpse into our creativity—exploring innovative designs, successful collaborations, and transformative digital experiences.",
+    portfolioOurProjectsCta: "Our projects",
     // Homepage — Resources / blog teaser
     resourcesSectionBadge: "Resources",
     resourcesHeading: "Recent news",
@@ -233,6 +234,7 @@ const translations: Record<Locale, Record<string, string>> = {
     portfolioHeading: "Vybrané projekty",
     portfolioDescription:
       "Pohľad do našej tvorivosti—inovatívne dizajny, úspešné spolupráce a digitálne zážitky, ktoré menia značky.",
+    portfolioOurProjectsCta: "Naše projekty",
     resourcesSectionBadge: "Zdroje",
     resourcesHeading: "Novinky",
     resourcesDescription:
