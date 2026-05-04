@@ -64,8 +64,8 @@ const Header = () => {
         <header
             className={`fixed top-0 z-50 w-full border-t-4 border-primary transition-[background-color,box-shadow,backdrop-filter] duration-[680ms] ease-soft motion-reduce:transition-none ${
                 sticky
-                    ? "border-b border-black/[0.06] bg-white/50 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.1)] backdrop-blur-sm backdrop-saturate-150 dark:border-white/[0.08] dark:bg-black/35 dark:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.4)]"
-                    : "border-b border-transparent bg-transparent"
+                    ? "bg-white/50 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.1)] backdrop-blur-sm backdrop-saturate-150 dark:bg-black/35 dark:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.4)]"
+                    : "bg-transparent"
             }`}
         >
             <div className="container">
