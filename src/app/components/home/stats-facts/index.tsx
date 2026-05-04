@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
 
 function StatsFacts() {
-    const { locale } = useLanguage();
+    const { locale, t } = useLanguage();
     const [statsFactData, setStatsFactData] = useState<any>(null);
     const { ref, inView } = useInView({
         triggerOnce: true,
@@ -67,7 +67,7 @@ function StatsFacts() {
                                 })}
                             </div>
                             <div>
-                                <NavigationLink navigationTitle="Who we are" navigationLink="/about" transform={true} />
+                                <NavigationLink navigationTitle={t("whoWeAre")} navigationLink="/about" transform={true} />
                             </div>
                         </div>
                     </div>

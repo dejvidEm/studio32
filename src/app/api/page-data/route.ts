@@ -28,9 +28,6 @@ function getStatsFactData(lang: "en" | "sk") {
   };
 }
 
-const serviceDescpEn = "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.";
-const serviceDescpSk = "Pri výbere agentúry pre webový dizajn je dôležité zvážiť jej povesť, skúsenosti a špecifické potreby vášho projektu.";
-
 const brandingDescpSk =
   "Branding nie je len o logu či webovej stránke. Je to celkový dojem, ktorý si zákazník odnáša z každej interakcie s vašou firmou. Každý rok pribúdajú stovky tisíc nových ochranných známok – práve preto je silná značka kľúčom k odlíšeniu. Buduje dôveru, priťahuje nových zákazníkov a zvyšuje hodnotu vašich produktov aj služieb, čo sa prirodzene premieta do vyšších ziskov.";
 const brandingDescpEn =
@@ -46,12 +43,17 @@ const contentDescpSk =
 const contentDescpEn =
   "Content creation isn't just about posts or copy—it's how a brand communicates, builds trust, and stays memorable at every customer touchpoint. In a crowded digital space, consistent, quality content decides whether a brand fades away or stands out. Thoughtful communication on social media, in emails, blogs, and visuals strengthens brand identity, attracts the right audience, and naturally increases both perceived value and business results.";
 
+const marketingDescpSk =
+  "Marketing nie je len o reklamách či kampaniach. Je to systematický spôsob, ako značka rastie, oslovuje správne publikum a premieňa pozornosť na reálne výsledky. V preplnenom digitálnom prostredí rozhoduje stratégia, konzistentnosť a presné cielenie o tom, kto získa zákazníka. Efektívny marketing zvyšuje viditeľnosť, buduje dôveru a podporuje dlhodobý rast, ktorý sa priamo odráža na tržbách a sile značky.";
+const marketingDescpEn =
+  "Marketing isn't just ads or campaigns. It's a systematic way for your brand to grow, reach the right audience, and turn attention into real results. In a crowded digital environment, strategy, consistency, and precise targeting decide who wins the customer. Effective marketing raises visibility, builds trust, and supports long-term growth that translates directly into revenue and brand strength.";
+
 function getServicesData(lang: "en" | "sk") {
   const isSk = lang === "sk";
-  const descp = isSk ? serviceDescpSk : serviceDescpEn;
   const brandingDescp = isSk ? brandingDescpSk : brandingDescpEn;
   const webDescp = isSk ? webDescpSk : webDescpEn;
   const contentDescp = isSk ? contentDescpSk : contentDescpEn;
+  const marketingDescp = isSk ? marketingDescpSk : marketingDescpEn;
   return {
     number: "03",
     name: isSk ? "Služby" : "Services",
@@ -63,7 +65,7 @@ function getServicesData(lang: "en" | "sk") {
       { id: 1, image: "https://placehold.co/400x250", heading: "Branding", descp: brandingDescp },
       { id: 2, image: "https://placehold.co/400x250", heading: isSk ? "Webstránka" : "Website", descp: webDescp },
       { id: 3, image: "https://placehold.co/400x250", heading: isSk ? "Tvorba obsahu" : "Content creation", descp: contentDescp },
-      { id: 4, image: "https://placehold.co/400x250", heading: isSk ? "Animácie a 3D modelovanie" : "Motion & 3d modeling", descp },
+      { id: 4, image: "https://placehold.co/400x250", heading: "Marketing", descp: marketingDescp },
     ],
   };
 }
@@ -201,8 +203,8 @@ function getAboutusStats(lang: "en" | "sk") {
 
 function getServicesSliderData(lang: "en" | "sk") {
   return lang === "sk"
-    ? ["Branding", "Webstránka", "Agentúra", "Tvorba obsahu", "SaaS", "Animácie a 3D", "Fotografia"]
-    : ["Branding", "Website", "Agency", "Content creation", "SaaS", "Motion & 3d modeling", "Photography"];
+    ? ["Branding", "Webstránka", "Agentúra", "Tvorba obsahu", "SaaS", "Marketing", "Fotografia"]
+    : ["Branding", "Website", "Agency", "Content creation", "SaaS", "Marketing", "Photography"];
 }
 
 export const GET = async (request: Request) => {

@@ -68,10 +68,28 @@ export function getProjectsBySlug(slug: string, fields: string[] = [], locale: P
 
 export function getAllProjects(fields: string[] = [], locale: ProjectLocale = "en") {
   const slugs = getPostSlugs();
-  return slugs
+  const fetchFields = fields.includes("order") ? fields : [...fields, "order"];
+
+  const projects = slugs
     .map((filename) => {
       const slug = filename.replace(/\.mdx$/, "");
-      return getProjectsBySlug(slug, fields, locale);
+      return getProjectsBySlug(slug, fetchFields, locale);
     })
     .filter((p): p is NonNullable<typeof p> => p != null);
+
+  projects.sort((a, b) => {
+    const ao = Number((a as Record<string, unknown>).order);
+    const bo = Number((b as Record<string, unknown>).order);
+    const an = Number.isFinite(ao) ? ao : 999;
+    const bn = Number.isFinite(bo) ? bo : 999;
+    return an - bn;
+  });
+
+  if (!fields.includes("order")) {
+    projects.forEach((p) => {
+      delete (p as Record<string, unknown>).order;
+    });
+  }
+
+  return projects;
 }

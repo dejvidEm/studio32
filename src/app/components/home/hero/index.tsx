@@ -28,8 +28,9 @@ function HeroSection() {
 
     return (
         <ParallaxProvider>
-            <Parallax speed={-12}>
-                <section className="relative flex min-h-screen h-full items-end overflow-x-clip text-white bg-black">
+            <div className="relative overflow-hidden">
+                <Parallax speed={-12}>
+                    <section className="relative flex min-h-screen h-full items-end overflow-x-clip text-white bg-black">
                     {/* Background Video */}
                     <video
                         className="absolute top-0 left-0 w-full h-full object-cover"
@@ -150,7 +151,8 @@ function HeroSection() {
                         </div>
                     </div>
                 </section>
-            </Parallax>
+                </Parallax>
+            </div>
         </ParallaxProvider>
     );
 }

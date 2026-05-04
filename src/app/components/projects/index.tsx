@@ -27,12 +27,12 @@ const ProjectList = () => {
     <section className="dark:bg-darkblack py-20 md:py-40">
       <div className="flex flex-col gap-24">
         <div className="container">
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2">
             {projects.map((project, index) => {
               return (
                 <Link key={index} href={`/projects/${project.slug}`} className="group flex flex-col gap-5">
                   <div className="relative">
-                    <img src={project.coverImage} alt={project.title} className="w-full" />
+                    <img src={project.coverImage} alt={project.title} className="block h-auto w-full max-w-full" />
                     <span
                       className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 backdrop-blur-0 transition-all duration-[520ms] ease-soft md:group-hover:bg-black/70 md:group-hover:opacity-100 md:group-hover:backdrop-blur-sm"
                       aria-hidden
@@ -52,7 +52,7 @@ const ProjectList = () => {
                     </span>
                   </div>
                   <div className="flex flex-col gap-3">
-                    <h3>{project.title}</h3>
+                    <h3 className="font-light">{project.title}</h3>
                     <div className="flex flex-wrap gap-3">
                       {project.ScopeOfWork.map((value, idx) => (
                         <span

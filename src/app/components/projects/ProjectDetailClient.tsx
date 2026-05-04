@@ -74,7 +74,12 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
     <>
       <section>
         <div>
-          <Herobanner bannerimage={project.coverImage} heading={project.title} desc={project.description} />
+          <Herobanner
+            bannerimage={project.coverImage}
+            heading={project.title}
+            desc={project.description}
+            headingClass="large-heading font-light"
+          />
         </div>
         <div className="dark:bg-darkblack">
           <div className="container">

@@ -37,6 +37,7 @@
 
 html {
   overflow-x: clip;
+  overscroll-behavior: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -50,6 +51,7 @@ body {
   padding: 0;
   height: 100%;
   overflow-x: clip;
+  overscroll-behavior: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }

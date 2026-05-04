@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { useLanguage } from "@/app/context/LanguageContext";
 
 type Project = {
@@ -13,19 +13,23 @@ type Project = {
     coverImage: string;
 };
 
-function ProjectCard({ value }: { value: Project }) {
+function ProjectCard({ value, className }: { value: Project; className?: string }) {
     return (
-        <article className="relative group flex w-[min(85vw,530px)] shrink-0 flex-col gap-3 lg:gap-5">
-            <div className="relative">
-                <div className="h-80 w-auto">
-                    <Image
-                        src={value.coverImage}
-                        alt={value.title}
-                        width={530}
-                        height={350}
-                        style={{ width: "100%", maxWidth: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                </div>
+        <article
+            className={cn(
+                "relative group flex w-[min(85vw,530px)] shrink-0 flex-col gap-3 lg:gap-5",
+                className
+            )}
+        >
+            <div className="relative w-full">
+                {/* Native intrinsic dimensions — tops align via items-start on the strip */}
+                <img
+                    src={value.coverImage}
+                    alt={value.title}
+                    className="block h-auto w-full max-w-full"
+                    loading="lazy"
+                    decoding="async"
+                />
                 <Link
                     href={`/projects/${value.slug}`}
                     className="absolute inset-0 flex items-center justify-center opacity-0 bg-black/0 backdrop-blur-0 transition-all duration-[520ms] ease-soft group-hover:opacity-100 group-hover:bg-black/70 group-hover:backdrop-blur-sm"
@@ -45,7 +49,7 @@ function ProjectCard({ value }: { value: Project }) {
                 </Link>
             </div>
             <div className="flex flex-col gap-2 lg:gap-4">
-                <h3>{value.title}</h3>
+                <h3 className="font-light">{value.title}</h3>
                 <div className="flex flex-wrap gap-3">
                     {value.ScopeOfWork.map((tag, idx) => (
                         <p
@@ -66,7 +70,7 @@ function ProjectCard({ value }: { value: Project }) {
  */
 function ProjectsStrip({ projects, dupIndex }: { projects: Project[]; dupIndex: number }) {
     return (
-        <div className="flex shrink-0 gap-5 pr-5 md:gap-8 md:pr-8">
+        <div className="flex shrink-0 items-start gap-5 pr-5 md:gap-8 md:pr-8">
             {projects.map((value) => (
                 <ProjectCard key={`${dupIndex}-${value.slug}`} value={value} />
             ))}
@@ -154,15 +158,34 @@ export default function Projectswiper() {
     } as CSSProperties;
 
     return (
-        <div
-            className="portfolio-marquee-wrapper select-none overflow-hidden"
-            onMouseEnter={onMarqueeEnter}
-            onMouseLeave={onMarqueeLeave}
-        >
-            <div ref={trackRef} className="portfolio-marquee-track flex w-max" style={durationStyle}>
-                <ProjectsStrip projects={projects} dupIndex={0} />
-                <ProjectsStrip projects={projects} dupIndex={1} />
+        <>
+            {/* Mobile / small tablet: swipe scroll, one card + peek of next; no auto-marquee */}
+            <div
+                className={cn(
+                    "md:hidden overflow-x-auto overflow-y-visible overscroll-x-contain",
+                    "snap-x snap-mandatory scroll-pl-7 sm:scroll-pl-8",
+                    "touch-pan-x [-webkit-overflow-scrolling:touch]",
+                    "[scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                )}
+            >
+                <div className="flex w-max items-start gap-5 pb-1 pl-7 pr-5 sm:pl-8 sm:pr-7">
+                    {projects.map((value) => (
+                        <ProjectCard key={value.slug} value={value} className="snap-start snap-always" />
+                    ))}
+                </div>
             </div>
-        </div>
+
+            {/* md+: infinite marquee + hover slow */}
+            <div
+                className="portfolio-marquee-wrapper hidden select-none overflow-hidden md:block"
+                onMouseEnter={onMarqueeEnter}
+                onMouseLeave={onMarqueeLeave}
+            >
+                <div ref={trackRef} className="portfolio-marquee-track flex w-max items-start" style={durationStyle}>
+                    <ProjectsStrip projects={projects} dupIndex={0} />
+                    <ProjectsStrip projects={projects} dupIndex={1} />
+                </div>
+            </div>
+        </>
     );
 }

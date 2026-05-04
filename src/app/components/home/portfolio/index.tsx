@@ -30,7 +30,7 @@ function Portfolio() {
                     </div>
                 </div>
 
-                <div className="px-3.5">
+                <div className="px-0 md:px-3.5">
                     <Projectswiper />
                 </div>
             </div>

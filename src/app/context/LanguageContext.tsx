@@ -77,6 +77,17 @@ const translations: Record<Locale, Record<string, string>> = {
     aboutUs: "About us",
     whyChooseUs: "Why choose us",
     aboutUsDescription: "We blend creativity with strategy to craft unique digital experiences that make an impact. With a focus on innovation, attention to details.",
+    aboutHomeCard1Quote:
+      "The team exceeded our expectations with a stunning brand identity.",
+    aboutHomeCard1StatPercent: "98.6%",
+    aboutHomeCard1StatLabel: "Customer satisfaction",
+    aboutHomeCard1Author: "Wade Warren",
+    aboutHomeCard1Company: "Bank of America",
+    aboutHomeCard2ProjectsNumber: "30",
+    aboutHomeCard2ProjectsLabel: "successful projects",
+    aboutHomeCard3BrandsTitle: "Brands served worldwide",
+    aboutHomeCard3Body:
+      "Our global reach allows us to create unique, culturally relevant designs for businesses across different industries.",
     // Navigation
     back: "Back",
     backToHome: "Back to Home",
@@ -181,6 +192,17 @@ const translations: Record<Locale, Record<string, string>> = {
     aboutUs: "O nás",
     whyChooseUs: "Prečo si vybrať nás",
     aboutUsDescription: "Spájame kreativitu so stratégiou a vytvárame jedinečné digitálne zážitky s dopadom. So zameraním na inovácie a dôraz na detaily.",
+    aboutHomeCard1Quote:
+      "Tím predčil naše očakávania s výnimočnou vizuálnou identitou značky.",
+    aboutHomeCard1StatPercent: "98.6%",
+    aboutHomeCard1StatLabel: "Spokojnosť zákazníkov",
+    aboutHomeCard1Author: "Wade Warren",
+    aboutHomeCard1Company: "Bank of America",
+    aboutHomeCard2ProjectsNumber: "30",
+    aboutHomeCard2ProjectsLabel: "úspešných projektov",
+    aboutHomeCard3BrandsTitle: "Značiek obsluhovaných celosvetovo",
+    aboutHomeCard3Body:
+      "Náš globálny dosah nám umožňuje tvoriť jedinečné, kultúrne relevantné dizajny pre firmy naprieč odvetviami.",
     back: "Späť",
     backToHome: "Späť na domov",
     pageNotFound: "Ups! Stránka nebola nájdená",

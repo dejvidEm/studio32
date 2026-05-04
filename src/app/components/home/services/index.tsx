@@ -55,7 +55,7 @@ function Services() {
                                     <div
                                         key={index}
                                         onMouseEnter={() => setActiveIndex(index)}
-                                        className="group relative flex cursor-pointer flex-col items-start justify-between gap-1 border-t border-secondary/12 py-6 dark:border-secondary/12 xl:flex-row xl:items-start xl:gap-10 xl:py-10">
+                                        className="group relative flex cursor-default flex-col items-start justify-between gap-1 border-t border-secondary/12 py-6 dark:border-secondary/12 md:cursor-pointer xl:flex-row xl:items-start xl:gap-10 xl:py-10">
                                         <div className="flex shrink-0 flex-col items-start gap-0.5 2xl:w-full 2xl:max-w-sm">
                                             <span className="tabular-nums text-xs font-medium tracking-tight text-secondary/45 dark:text-secondary/45 md:text-sm">
                                                 [{index + 1}]
@@ -67,17 +67,18 @@ function Services() {
                                         <div
                                             className={cn(
                                                 "grid w-full min-w-0 xl:flex-1",
-                                                "transition-[grid-template-rows] duration-[620ms] ease-soft motion-reduce:transition-none",
-                                                activeIndex === index ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                                                "transition-[grid-template-rows] duration-[620ms] ease-soft motion-reduce:transition-none max-md:!transition-none",
+                                                activeIndex === index ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                                                "max-md:!grid-rows-[1fr]"
                                             )}
                                         >
-                                            <div className="min-h-0 overflow-hidden">
+                                            <div className="min-h-0 overflow-hidden max-md:overflow-visible">
                                                 <p
                                                     className={cn(
-                                                        "text-base leading-snug text-secondary/70 transition-[opacity,transform] duration-[580ms] ease-soft motion-reduce:transition-none dark:text-secondary/70 xl:max-w-xl",
+                                                        "text-base leading-snug text-secondary/70 transition-[opacity,transform] duration-[580ms] ease-soft motion-reduce:transition-none dark:text-secondary/70 xl:max-w-xl max-md:!transition-none",
                                                         activeIndex === index
                                                             ? "translate-y-0 opacity-100"
-                                                            : "pointer-events-none -translate-y-1 opacity-0"
+                                                            : "pointer-events-none -translate-y-1 opacity-0 max-md:!pointer-events-auto max-md:!translate-y-0 max-md:!opacity-100"
                                                     )}
                                                 >
                                                     {value.descp}
