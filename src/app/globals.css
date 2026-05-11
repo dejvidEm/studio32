@@ -128,6 +128,22 @@ body::-webkit-scrollbar {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-name: portfolio-marquee;
+    backface-visibility: hidden;
+  }
+
+  /*
+   * Each card gets its own layer so hover fades don’t repeatedly repromote siblings under an
+   * animated transform track (safari/chrome “skip” crossing images).
+   */
+  .portfolio-marquee-track .portfolio-project-card {
+    transform: translateZ(0);
+  }
+
+  /* Pause marquee on hover (CSS only; JS playbackRate ramps could stutter crossing cards). */
+  @media (hover: hover) and (pointer: fine) {
+    .portfolio-marquee-wrapper:hover .portfolio-marquee-track {
+      animation-play-state: paused;
+    }
   }
 }
 
