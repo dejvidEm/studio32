@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { heroCarouselSlides } from "@/data/heroCarouselSlides";
 import NavMark from "@/app/components/layout/logo/NavMark";
@@ -26,11 +26,26 @@ function HeroSection() {
 
     const caption = heroCarouselSlides[index][locale === "sk" ? "sk" : "en"];
 
+    /** In-app browsers + touch: scroll-linked parallax often stutters on direction reversals */
+    const [parallaxSpeed, setParallaxSpeed] = useState(-12);
+    useEffect(() => {
+        const mqMobile = window.matchMedia("(max-width: 767px)");
+        const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const apply = () => setParallaxSpeed(mqMobile.matches || mqReduce.matches ? 0 : -12);
+        apply();
+        mqMobile.addEventListener("change", apply);
+        mqReduce.addEventListener("change", apply);
+        return () => {
+            mqMobile.removeEventListener("change", apply);
+            mqReduce.removeEventListener("change", apply);
+        };
+    }, []);
+
     return (
         <ParallaxProvider>
             <div className="relative overflow-hidden">
-                <Parallax speed={-12}>
-                    <section className="relative flex min-h-screen h-full items-end overflow-x-clip text-white bg-black">
+                <Parallax speed={parallaxSpeed}>
+                    <section className="relative flex min-h-screen min-h-[100dvh] h-full items-end overflow-x-clip text-white bg-black">
                     {/* Background Video */}
                     <video
                         className="absolute top-0 left-0 w-full h-full object-cover"

@@ -35,9 +35,14 @@
   --height-700px: 700px;
 }
 
+/*
+ * IG / FB WebViews: overscroll-behavior:none on BOTH axes disables native vertical elasticity
+ * and fights the scroll gesture when reversing direction (jumps). Keep vertical default “auto”.
+ */
 html {
   overflow-x: clip;
-  overscroll-behavior: none;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -51,7 +56,8 @@ body {
   padding: 0;
   height: 100%;
   overflow-x: clip;
-  overscroll-behavior: none;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }

@@ -10,7 +10,7 @@ const ThemeToggler = () => {
     setSticky(window.scrollY >= 80);
   };
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
