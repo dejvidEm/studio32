@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import ClientProviders from "./ClientProviders";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Studio32",
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={manrope.className}>
         <ClientProviders>{children}</ClientProviders>
+        <SpeedInsights />
       </body>
     </html>
   );
