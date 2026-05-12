@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+/** Dočasne skryté — na obnovenie položky Blog v burger menu nastav na `true`. Záznamy v poliach nižšie ostanú nezmenené. */
+const SHOW_BLOG_IN_SITE_MENU = false;
+
 const MenuDataEn = [
   { id: 1, title: "Home", path: "/", newTab: false },
   { id: 2, title: "About", path: "/about", newTab: false },
@@ -69,7 +72,9 @@ const footerDataSk = {
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
   const lang = searchParams.get("lang") === "en" ? "en" : "sk";
-  const MenuData = lang === "en" ? MenuDataEn : MenuDataSk;
+  const MenuDataRaw = lang === "en" ? MenuDataEn : MenuDataSk;
+  const MenuData =
+    SHOW_BLOG_IN_SITE_MENU ? MenuDataRaw : MenuDataRaw.filter((item) => item.path !== "/blog");
   const footerData = lang === "en" ? footerDataEn : footerDataSk;
   return NextResponse.json({ footerData, MenuData });
 };
