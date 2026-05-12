@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SHOW_HOME_BLOG_TEASER_AND_NAV } from "@/feature-flags";
 import Aboutus from "./components/home/about-us";
 import Contact from "./components/home/contact";
 import Faq from "./components/home/faq";
@@ -14,9 +15,6 @@ export const metadata: Metadata = {
     title: "Studio32",
 };
 
-/** Dočasne vypnuté — na obnovenie sekcie s blogom na domovskej obrazovke nastav na `true`. */
-const SHOW_HOME_RESOURCES_BLOG_SECTION = false;
-
 export default function Home() {
   return (
     <>
@@ -28,7 +26,7 @@ export default function Home() {
       <Testimonial/>
       <Team teamdataNumber="06"/>
       <Faq/>
-      {SHOW_HOME_RESOURCES_BLOG_SECTION ? <Resources /> : null}
+      {SHOW_HOME_BLOG_TEASER_AND_NAV ? <Resources /> : null}
       <Contact contactdataNumber="10"/>
     </>
   );

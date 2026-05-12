@@ -67,55 +67,81 @@ const Contact = (props: { contactdataNumber: string }) => {
 
 
     return (
-        <section className="py-20 md:py-40 dark:bg-darkblack">
+        <section className="py-16 md:py-28 xl:py-32 dark:bg-darkblack">
             <div className="container">
-                <div className="flex flex-col gap-8 md:gap-20">
-                    <div className="flex flex-col gap-14 xl:gap-24">
-                        <div className="flex flex-col xl:flex xl:flex-row items-start gap-8">
-                            <div className="flex w-full max-w-xl items-center gap-4 py-3 md:gap-8">
-                                <span className="shrink-0 text-base font-semibold tabular-nums text-secondary/50 dark:text-white/70">
-                                    [{contactdataNumber ? String(contactdataNumber) : "10"}]
-                                </span>
-                                <div className="h-px w-16 shrink-0 bg-black/12 dark:bg-white/12" />
-                                <p className="section-bedge rounded-full py-1.5 px-4">{t("contactUs")}</p>
+                <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:gap-y-7 xl:grid-cols-[minmax(0,max-content)_minmax(0,1fr)] xl:gap-x-10 2xl:gap-x-12">
+                    <div className="flex w-full items-center gap-4 py-2 md:gap-6 xl:col-start-1 xl:row-start-1 xl:w-max xl:max-w-[min(100%,22rem)]">
+                        <span className="shrink-0 text-base font-semibold tabular-nums text-secondary/50 dark:text-white/70">
+                            [{contactdataNumber ? String(contactdataNumber) : "10"}]
+                        </span>
+                        <div className="h-px w-16 shrink-0 bg-black/12 dark:bg-white/12" />
+                        <p className="section-bedge rounded-full px-4 py-1.5">{t("contactUs")}</p>
+                    </div>
+                    <h2 className="max-w-3xl text-pretty xl:col-start-2 xl:row-start-1 xl:max-w-none">
+                        {t("getInTouch")}
+                    </h2>
+                    <div className="flex min-h-0 w-full flex-col gap-10 md:gap-12 xl:col-start-1 xl:row-start-2 xl:w-max xl:max-w-[min(100%,22rem)] xl:self-stretch">
+                        <div className="flex flex-col gap-4 md:gap-6">
+                            <p className="text-secondary/70 dark:text-white/70 xl:max-w-none">{t("contactSubtext")}</p>
+                            <div>
+                                <ul className="flex flex-col gap-2.5">
+                                    {contactData?.keypoint?.map((value: any, index: any) => {
+                                        return (
+                                            <li key={index} className="flex items-center gap-1.5 sm:gap-4">
+                                                <div className="flex-shrink-0 rounded-full bg-primary p-1 w-fit sm:p-1.5">
+                                                    <Image
+                                                        src={"/images/Icon/right-check.svg"}
+                                                        alt=""
+                                                        width={20}
+                                                        height={20}
+                                                    />
+                                                </div>
+                                                <span className="flex-1">{value}</span>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
                             </div>
-                            <div className="flex flex-col gap-11">
-                                <div className="flex flex-col gap-5 ">
-                                    <h2 className="max-w-3xl">{t("getInTouch")}</h2>
+                        </div>
+                        <div className="flex w-full flex-col items-start gap-2 pt-6 md:gap-2.5 md:pt-8">
+                            <div className="flex items-start gap-2.5 sm:gap-3">
+                                {contactData?.managerProfile?.image && (
+                                    <Image
+                                        src={contactData.managerProfile.image}
+                                        alt={
+                                            contactData.managerProfile?.name
+                                                ? `Profil: ${contactData.managerProfile.name}`
+                                                : "Profilová fotografia"
+                                        }
+                                        width={224}
+                                        height={224}
+                                        sizes="(max-width: 639px) 92px, (max-width: 767px) 100px, 112px"
+                                        className="size-[5.75rem] shrink-0 -translate-y-5 rounded-full object-cover sm:size-24 sm:-translate-y-[1.375rem] md:size-[6.75rem] md:-translate-y-6"
+                                    />
+                                )}
+                                <div className="min-w-0 flex-1 text-left">
+                                    <p className="text-base font-medium tracking-tight text-secondary dark:text-white sm:text-[1.0625rem]">
+                                        {contactData?.managerProfile?.name}
+                                    </p>
+                                    {contactData?.managerProfile?.position ? (
+                                        <span className="mt-1.5 block text-sm leading-snug text-secondary/70 dark:text-white/65 sm:text-[0.9375rem]">
+                                            {contactData.managerProfile.position}
+                                        </span>
+                                    ) : null}
+                                    {contactData?.managerProfile?.phone ? (
+                                        <a
+                                            href={`tel:${contactData.managerProfile.phone.replace(/\s/g, "")}`}
+                                            className="mt-2 block w-fit text-sm font-medium tracking-tight text-primary transition-colors duration-[380ms] ease-soft hover:text-primary/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-darkblack motion-reduce:transition-none sm:text-[0.9375rem]"
+                                        >
+                                            {contactData.managerProfile.phone}
+                                        </a>
+                                    ) : null}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col xl:flex xl:flex-row gap-15 xl:gap-48">
-                        <div className="max-w-md flex flex-col gap-9 md:gap-16">
-                            <div className="flex flex-col gap-5 md:gap-8">
-                                <p className="max-w-2xl text-secondary/70 dark:text-white/70">{t("contactSubtext")}</p>
-                                <div>
-                                    <ul className="flex flex-col gap-3">
-                                        {contactData?.keypoint?.map((value:any, index:any) => {
-                                            return (
-                                                <li key={index} className="flex items-center gap-1.5 sm:gap-4">
-                                                    <div className="bg-primary w-fit p-1 sm:p-1.5 rounded-full flex-shrink-0">
-                                                        <Image src={"/images/Icon/right-check.svg"} alt="right-icon" width={20} height={20} />
-                                                    </div>
-                                                    <span className="flex-1">{value}</span>
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-5">
-                                {contactData?.managerProfile?.image && 
-                                <Image src={contactData?.managerProfile?.image} alt="image" width={64} height={64} className="rounded-full" />}
-                                <div>
-                                    <p>{contactData?.managerProfile?.name}</p>
-                                    <span className="text-base text-secondary/70 dark:text-white/70">{contactData?.managerProfile?.position}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full">
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-5 md:gap-8">
+                    <div className="min-w-0 w-full xl:col-start-2 xl:row-start-2">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4 md:gap-6">
                                 <div>
                                     <input
                                         required
@@ -232,8 +258,6 @@ const Contact = (props: { contactdataNumber: string }) => {
                                 </div>
                             </form>
                         </div>
-
-                    </div>
                 </div>
             </div>
         </section>

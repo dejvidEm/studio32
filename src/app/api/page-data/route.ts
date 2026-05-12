@@ -29,22 +29,22 @@ function getStatsFactData(lang: "en" | "sk") {
 }
 
 const brandingDescpSk =
-  "Branding nie je len o logu či webovej stránke. Je to celkový dojem, ktorý si zákazník odnáša z každej interakcie s vašou firmou. Každý rok pribúdajú stovky tisíc nových ochranných známok – práve preto je silná značka kľúčom k odlíšeniu. Buduje dôveru, priťahuje nových zákazníkov a zvyšuje hodnotu vašich produktov aj služieb, čo sa prirodzene premieta do vyšších ziskov.";
+  "Silná značka vzniká z každého detailu, ktorý zákazník pri kontakte s firmou zažije. Nejde len o logo či webstránku, ale o celkový pocit, dôveru a zapamätateľnosť. Každý rok pribúdajú stovky tisíc nových ochranných známok, a práve preto je odlíšenie kľúčové. Dobre vybudovaný branding pomáha priťahovať nových zákazníkov, posilňuje hodnotu produktov a služieb a prirodzene podporuje rast ziskov.";
 const brandingDescpEn =
   "Branding isn't just a logo or a website. It's the overall impression customers take away from every interaction with your business. Every year, hundreds of thousands of new trademarks are filed—which is why a strong brand is essential to standing out. It builds trust, attracts new customers, and increases the value of your products and services, which naturally translates into higher profits.";
 
 const webDescpSk =
-  "Web nie je len vizitka na internete – je to centrum vašej značky. V záplave nových stránok uspejú len tie, ktoré sú premyslené a funkčné. Kvalitná webstránka vás odlíši od konkurencie, pritiahne pozornosť a posilní hodnotu vašej ponuky. Správne navrhnutý web je investícia, ktorá sa vracia v podobe vyšších konverzií a silnejšej značky.";
+  "Moderná webstránka je viac než len online vizitka. Predstavuje centrum vašej značky, miesto prvého dojmu aj nástroj na získavanie zákazníkov. V dnešnom digitálnom prostredí uspejú iba stránky, ktoré sú vizuálne atraktívne, rýchle a funkčné. Premyslený web dokáže odlíšiť firmu od konkurencie, zvýšiť dôveryhodnosť a priniesť viac konverzií aj obchodných príležitostí.";
 const webDescpEn =
   "A website isn't just an online business card—it's the hub of your brand. Among countless new sites, only the thoughtful and functional ones succeed. A quality website sets you apart from competitors, captures attention, and strengthens the value of your offering. A well-designed site is an investment that pays back through higher conversions and a stronger brand.";
 
 const contentDescpSk =
-  "Tvorba obsahu nie je len o príspevkoch či textoch. Je to spôsob, akým značka komunikuje, buduje dôveru a zostáva v pamäti zákazníka pri každom kontakte. V preplnenom digitálnom priestore rozhoduje konzistentný a kvalitný obsah o tom, či značka zanikne alebo vynikne. Premyslená komunikácia na sociálnych sieťach, v emailoch, blogoch či vizuáloch posilňuje identitu značky, priťahuje správne publikum a prirodzene zvyšuje jej hodnotu aj obchodné výsledky.";
+  "Kvalitný obsah rozhoduje o tom, ako si zákazníci značku zapamätajú. Každý príspevok, text, vizuál či email formuje komunikáciu firmy a buduje jej identitu. V preplnenom online priestore pomáha konzistentný obsah zaujať správne publikum, posilniť dôveru a vytvoriť dlhodobý vzťah so zákazníkmi. Práve premyslená komunikácia často oddeľuje priemerné značky od tých úspešných.";
 const contentDescpEn =
   "Content creation isn't just about posts or copy—it's how a brand communicates, builds trust, and stays memorable at every customer touchpoint. In a crowded digital space, consistent, quality content decides whether a brand fades away or stands out. Thoughtful communication on social media, in emails, blogs, and visuals strengthens brand identity, attracts the right audience, and naturally increases both perceived value and business results.";
 
 const marketingDescpSk =
-  "Marketing nie je len o reklamách či kampaniach. Je to systematický spôsob, ako značka rastie, oslovuje správne publikum a premieňa pozornosť na reálne výsledky. V preplnenom digitálnom prostredí rozhoduje stratégia, konzistentnosť a presné cielenie o tom, kto získa zákazníka. Efektívny marketing zvyšuje viditeľnosť, buduje dôveru a podporuje dlhodobý rast, ktorý sa priamo odráža na tržbách a sile značky.";
+  "Za úspešnou značkou stojí stratégia, ktorá dokáže premeniť pozornosť na reálne výsledky. Marketing dnes nie je iba o reklamách, ale o správnom cielení, konzistentnej komunikácii a budovaní dlhodobého rastu. Efektívne kampane zvyšujú viditeľnosť firmy, oslovujú relevantné publikum a pomáhajú budovať silnú a dôveryhodnú značku, ktorá rastie spolu s tržbami.";
 const marketingDescpEn =
   "Marketing isn't just ads or campaigns. It's a systematic way for your brand to grow, reach the right audience, and turn attention into real results. In a crowded digital environment, strategy, consistency, and precise targeting decide who wins the customer. Effective marketing raises visibility, builds trust, and supports long-term growth that translates directly into revenue and brand strength.";
 
@@ -63,7 +63,7 @@ function getServicesData(lang: "en" | "sk") {
       : "A glimpse into our creativity—exploring innovative designs, successful collaborations, and transformative digital experiences.",
     data: [
       { id: 1, image: "https://placehold.co/400x250", heading: "Branding", descp: brandingDescp },
-      { id: 2, image: "https://placehold.co/400x250", heading: isSk ? "Webstránka" : "Website", descp: webDescp },
+      { id: 2, image: "https://placehold.co/400x250", heading: isSk ? "Webstránky" : "Website", descp: webDescp },
       { id: 3, image: "https://placehold.co/400x250", heading: isSk ? "Tvorba obsahu" : "Content creation", descp: contentDescp },
       { id: 4, image: "https://placehold.co/400x250", heading: "Marketing", descp: marketingDescp },
     ],
@@ -185,9 +185,10 @@ function getContactData(lang: "en" | "sk") {
   return {
     keypoint: isSk ? ["Neustála zákaznícka podpora", "Služby po celom svete"] : ["Always-On Customer Support", "Service Across the Globe"],
     managerProfile: {
-      image: "https://placehold.co/64x64",
-      name: "Courtney Henry",
-      position: isSk ? "Manažérka onboardingu a úspechu" : "Onboarding & Success Manager",
+      image: "/images/contact/david-mikulas-avatar.png",
+      name: "Dávid Mikuláš",
+      position: "Creative Director",
+      phone: "+421 918 722 720",
     },
   };
 }
@@ -203,7 +204,7 @@ function getAboutusStats(lang: "en" | "sk") {
 
 function getServicesSliderData(lang: "en" | "sk") {
   return lang === "sk"
-    ? ["Branding", "Webstránka", "Agentúra", "Tvorba obsahu", "SaaS", "Marketing", "Fotografia"]
+    ? ["Branding", "Webstránky", "Agentúra", "Tvorba obsahu", "SaaS", "Marketing", "Fotografia"]
     : ["Branding", "Website", "Agency", "Content creation", "SaaS", "Marketing", "Photography"];
 }
 

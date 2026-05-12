@@ -66,7 +66,7 @@ const translations: Record<Locale, Record<string, string>> = {
     // Contact
     contactUs: "Contact us",
     getInTouch: "Get in touch",
-    contactSubtext: "Let's collaborate and create something amazing! Tell me about your project—I'm all ears.",
+    contactSubtext: "Let's collaborate and create something amazing! Tell me about your project.",
     submitMessage: "Submit message",
     submitting: "Submitting",
     successMessage: "Great!!! Email has been Successfully Sent. We will get in touch asap.",
@@ -105,6 +105,14 @@ const translations: Record<Locale, Record<string, string>> = {
     heroBannerTermsDesc: "Understand the <span>Rules & Guidelines</span> Before Using Our Services",
     heroBannerPrivacyHeading: "Privacy Policy",
     heroBannerPrivacyDesc: "Understand the <span>Rules & Guidelines</span> Before Using Our Services",
+    heroBannerLicenseHeading: "General license terms",
+    heroBannerLicenseDesc: "How <span>licensed materials and deliverables</span> from Studio32 may be used",
+    licenseTermsLead1:
+      "These general license terms apply to creative deliverables, software components, templates, brand assets, and related materials supplied by Studio32 as part of our services unless a separate written agreement states otherwise.",
+    licenseTermsLead2:
+      "Use is limited to the scope agreed in your order or statement of work—typically internal business use for the customer who commissioned the work, without sublicensing unless explicitly permitted.",
+    licenseTermsLead3:
+      "For clarification or exceptions, please contact us at hello@studio32.sk. We reserve the right to update this document; material changes may be communicated on this page.",
     heroBannerBlogHeading: "Blog",
     heroBannerBlogDesc: "Excited to <span>begin something amazing?</span> Get in touch—we'd love to connect with you!",
     heroBannerProjectsHeading: "Projects",
@@ -183,7 +191,7 @@ const translations: Record<Locale, Record<string, string>> = {
     faqDescription: "Zistite, ako prispôsobujeme naše riešenia jedinečným potrebám, poskytujúc efektívne stratégie, personalizovanú značku a výnimočné zákaznícke skúsenosti.",
     contactUs: "Kontaktujte nás",
     getInTouch: "Spojte sa s nami",
-    contactSubtext: "Spolupracujme a vytvoríme niečo úžasné! Povedzte mi o vašom projekte—mám otvorené uši.",
+    contactSubtext: "Spolupracujme a vytvoríme niečo úžasné! Povedzte mi o vašom projekte.",
     submitMessage: "Odoslať správu",
     submitting: "Odosielam",
     successMessage: "Skvelé!!! E-mail bol úspešne odoslaný. Čo najskôr sa ozveme.",
@@ -218,6 +226,14 @@ const translations: Record<Locale, Record<string, string>> = {
     heroBannerTermsDesc: "Pozrite si <span>pravidlá a odporúčania</span> pred použitím našich služieb",
     heroBannerPrivacyHeading: "Ochrana súkromia",
     heroBannerPrivacyDesc: "Pozrite si <span>pravidlá a odporúčania</span> pred použitím našich služieb",
+    heroBannerLicenseHeading: "Všeobecné licenčné podmienky",
+    heroBannerLicenseDesc: "Ako možno používať <span>licencované podklady a diela</span> zo Studio32",
+    licenseTermsLead1:
+      "Tieto všeobecné licenčné podmienky sa vzťahujú na kreatívne výstupy, softvérové komponenty, šablóny, materiály značky a súvisiace podklady dodané štúdiom Studio32 v rámci služieb, ak zmluva alebo ponuka neustanoví inak.",
+    licenseTermsLead2:
+      "Rozsah použitia je obmedzený na to, čo bolo dohodnuté v objednávke alebo zadaní práce — zvyčajne interné obchodné použitie pre zákazníka, ktorý dielo objednal, bez sublicencovania, ak to nie je výslovne povolené.",
+    licenseTermsLead3:
+      "Pre upresnenie alebo výnimky nás kontaktujte na hello@studio32.sk. Vyhradzujeme si právo tento text aktualizovať; podstatné zmeny môžeme oznámiť na tejto stránke.",
     heroBannerBlogHeading: "Blog",
     heroBannerBlogDesc: "Tešíte sa na <span>niečo úžasné?</span> Ozvite sa—radi sa s vami spojíme!",
     heroBannerProjectsHeading: "Projekty",

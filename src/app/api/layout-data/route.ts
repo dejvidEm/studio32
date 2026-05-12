@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-
-/** Dočasne skryté — na obnovenie položky Blog v burger menu nastav na `true`. Záznamy v poliach nižšie ostanú nezmenené. */
-const SHOW_BLOG_IN_SITE_MENU = false;
+import { SHOW_HOME_BLOG_TEASER_AND_NAV } from "@/feature-flags";
 
 const MenuDataEn = [
   { id: 1, title: "Home", path: "/", newTab: false },
@@ -28,15 +26,39 @@ const footerDataEn = {
     { icon: "/images/footer/email-arrow.svg", link: "hello@studio32.sk", href: "mailto:hello@studio32.sk" },
     { icon: "/images/footer/Location.svg", link: "Bratislava, Slovakia", href: "https://www.google.com/maps/search/?api=1&query=Bratislava%2C+Slovakia" },
   ],
-  links: [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Services", href: "/#services" },
-    { name: "Work", href: "/projects" },
-    { name: "Terms", href: "/terms-and-conditions" },
-    { name: "Privacy Policy", href: "/privacy-policy" },
-    { name: "Error 404", href: "/not-found" },
+  serviceCards: [
+    { name: "Branding", href: "/#services" },
+    { name: "Websites", href: "/#services" },
+    { name: "Content creation", href: "/#services" },
+    { name: "Marketing", href: "/#services" },
   ],
+  columns: [
+    {
+      heading: "Links",
+      links: [
+        { name: "Home", href: "/" },
+        { name: "About", href: "/about" },
+        { name: "Services", href: "/#services" },
+        { name: "Work", href: "/projects" },
+      ],
+    },
+    {
+      heading: "Documents",
+      links: [
+        { name: "General terms of business", href: "/terms-and-conditions" },
+        { name: "General license terms", href: "/license-terms" },
+        { name: "GDPR", href: "/privacy-policy" },
+      ],
+    },
+    {
+      heading: "Contact",
+      links: [
+        { name: "Contact", href: "/contact" },
+        { name: "Support", href: "mailto:hello@studio32.sk?subject=Support" },
+      ],
+    },
+  ],
+  socialColumnHeading: "Social",
   socialLinks: [
     { name: "Facebook", href: "https://www.facebook.com/" },
     { name: "Instagram", href: "https://www.instagram.com/" },
@@ -52,15 +74,39 @@ const footerDataSk = {
     { icon: "/images/footer/email-arrow.svg", link: "hello@studio32.sk", href: "mailto:hello@studio32.sk" },
     { icon: "/images/footer/Location.svg", link: "Bratislava, Slovensko", href: "https://www.google.com/maps/search/?api=1&query=Bratislava%2C+Slovakia" },
   ],
-  links: [
-    { name: "Domov", href: "/" },
-    { name: "O nás", href: "/about" },
-    { name: "Služby", href: "/#services" },
-    { name: "Práca", href: "/projects" },
-    { name: "Obchodné podmienky", href: "/terms-and-conditions" },
-    { name: "Ochrana súkromia", href: "/privacy-policy" },
-    { name: "Chyba 404", href: "/not-found" },
+  serviceCards: [
+    { name: "Branding", href: "/#services" },
+    { name: "Webstránky", href: "/#services" },
+    { name: "Tvorba obsahu", href: "/#services" },
+    { name: "Marketing", href: "/#services" },
   ],
+  columns: [
+    {
+      heading: "Linky",
+      links: [
+        { name: "Domov", href: "/" },
+        { name: "O nás", href: "/about" },
+        { name: "Služby", href: "/#services" },
+        { name: "Práca", href: "/projects" },
+      ],
+    },
+    {
+      heading: "Dokumenty",
+      links: [
+        { name: "Všeob. obch. podmienky", href: "/terms-and-conditions" },
+        { name: "Všeob. lic. podmienky", href: "/license-terms" },
+        { name: "GDPR", href: "/privacy-policy" },
+      ],
+    },
+    {
+      heading: "Kontakt",
+      links: [
+        { name: "Kontakt", href: "/contact" },
+        { name: "Podpora", href: "mailto:hello@studio32.sk?subject=Podpora" },
+      ],
+    },
+  ],
+  socialColumnHeading: "Sociálne siete",
   socialLinks: [
     { name: "Facebook", href: "https://www.facebook.com/" },
     { name: "Instagram", href: "https://www.instagram.com/" },
@@ -72,9 +118,10 @@ const footerDataSk = {
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
   const lang = searchParams.get("lang") === "en" ? "en" : "sk";
-  const MenuDataRaw = lang === "en" ? MenuDataEn : MenuDataSk;
-  const MenuData =
-    SHOW_BLOG_IN_SITE_MENU ? MenuDataRaw : MenuDataRaw.filter((item) => item.path !== "/blog");
+  const menuSource = lang === "en" ? MenuDataEn : MenuDataSk;
+  const MenuData = SHOW_HOME_BLOG_TEASER_AND_NAV
+    ? menuSource
+    : menuSource.filter((item) => item.path !== "/blog");
   const footerData = lang === "en" ? footerDataEn : footerDataSk;
   return NextResponse.json({ footerData, MenuData });
 };
