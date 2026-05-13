@@ -1,3 +1,4 @@
+import { STUDIO_CONTACT_MANAGER_PROFILE } from "@/lib/contact-manager";
 import { NextResponse } from "next/server";
 
 function getAvatarList() {
@@ -169,12 +170,7 @@ function getContactData(lang: "en" | "sk") {
   const isSk = lang === "sk";
   return {
     keypoint: isSk ? ["Neustála zákaznícka podpora", "Služby po celom svete"] : ["Always-On Customer Support", "Service Across the Globe"],
-    managerProfile: {
-      image: "/images/contact/david-mikulas-avatar.png",
-      name: "Dávid Mikuláš",
-      position: "Creative Director",
-      phone: "+421 918 722 720",
-    },
+    managerProfile: { ...STUDIO_CONTACT_MANAGER_PROFILE },
   };
 }
 

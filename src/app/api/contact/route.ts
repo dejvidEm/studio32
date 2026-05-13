@@ -1,4 +1,9 @@
+import ContactAcknowledgementEmail, { CONTACT_ACK_MARK_PATH } from "@/emails/ContactAcknowledgementEmail";
+import { STUDIO_CONTACT_MANAGER_PROFILE } from "@/lib/contact-manager";
+import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import { NextRequest, NextResponse } from "next/server";
+import { createElement } from "react";
+import { render as renderAckEmail } from "@react-email/render";
 import { Resend } from "resend";
 
 /** Inbox where lead notifications arrive */
@@ -21,51 +26,20 @@ function greetingToken(name: string): string {
   return part?.length ? part : name;
 }
 
-function ackSk(first: string): { subject: string; html: string; text: string } {
-  const safeHtml = escapeHtml(first);
-  return {
-    subject: "Ďakujeme za správu — Studio32",
-    html: `
-      <p>Ahoj ${safeHtml},</p>
-      <p>Ďakujeme, že si nás kontaktoval. Tvoju správu sme prijali — čo najskôr ti odpíšeme na uvedený e-mail.</p>
-      <p>S pozdravom,<br/>Studio32</p>
-    `.trim(),
-    text: [
-      `Ahoj ${first}`,
-      "",
-      "Ďakujeme, že si nás kontaktoval. Tvoju správu sme prijali — čo najskôr ti odpíšeme na uvedený e-mail.",
-      "",
-      "S pozdravom,",
-      "Studio32",
-    ].join("\n"),
-  };
-}
-
-function ackEn(first: string): { subject: string; html: string; text: string } {
-  const safeHtml = escapeHtml(first);
-  return {
-    subject: "Thanks for your message — Studio32",
-    html: `
-      <p>Hi ${safeHtml},</p>
-      <p>Thanks for getting in touch. We've received your message and will reply as soon as we can.</p>
-      <p>Best,<br/>Studio32</p>
-    `.trim(),
-    text: [
-      `Hi ${first}`,
-      "",
-      "Thanks for getting in touch. We've received your message and will reply as soon as we can.",
-      "",
-      "Best,",
-      "Studio32",
-    ].join("\n"),
-  };
-}
-
 export async function POST(req: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
     return NextResponse.json(
-      { success: false, error: "service_unavailable" },
+      {
+        success: false,
+        error: "service_unavailable",
+        ...(process.env.NODE_ENV === "development"
+          ? {
+              hint:
+                "Missing RESEND_API_KEY — add it to package/.env.local (same value as Vercel) and restart `next dev`.",
+            }
+          : {}),
+      },
       { status: 503 },
     );
   }
@@ -90,7 +64,7 @@ export async function POST(req: NextRequest) {
   const name = typeof rec.name === "string" ? rec.name.trim() : "";
   const email = typeof rec.email === "string" ? rec.email.trim().toLowerCase() : "";
   const messageRaw = typeof rec.message === "string" ? rec.message.trim() : "";
-  const locale = rec.locale === "en" ? "en" : "sk";
+  const locale: "en" | "sk" = rec.locale === "en" ? "en" : "sk";
 
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!name || !emailOk || name.length > 200 || email.length > 254 || messageRaw.length > 8000) {
@@ -130,15 +104,36 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "send_failed" }, { status: 502 });
     }
 
-    const ack = locale === "en" ? ackEn(greeting) : ackSk(greeting);
+    const siteOrigin = getSiteUrl();
+    const ackProps = {
+      locale,
+      greetingFirstName: greeting,
+      message: messageRaw,
+      siteOrigin,
+      logoMainSrc: absoluteUrl(CONTACT_ACK_MARK_PATH),
+      logoFooterSrc: absoluteUrl(CONTACT_ACK_MARK_PATH),
+      avatarSrc: absoluteUrl(STUDIO_CONTACT_MANAGER_PROFILE.image),
+      managerName: STUDIO_CONTACT_MANAGER_PROFILE.name,
+      managerPosition: STUDIO_CONTACT_MANAGER_PROFILE.position,
+      managerPhone: STUDIO_CONTACT_MANAGER_PROFILE.phone,
+      managerMailboxDisplay: CONTACT_INBOX,
+    };
+
+    const ackHtml = await renderAckEmail(createElement(ContactAcknowledgementEmail, ackProps));
+    const ackText = await renderAckEmail(createElement(ContactAcknowledgementEmail, ackProps), {
+      plainText: true,
+    });
+
+    const subjectAck =
+      locale === "en" ? "Thanks for your message — Studio32" : "Ďakujeme za správu — Studio32";
 
     const { error: ackError } = await resend.emails.send({
       from,
       to: [email],
       replyTo: CONTACT_INBOX,
-      subject: ack.subject,
-      text: ack.text,
-      html: ack.html,
+      subject: subjectAck,
+      text: ackText,
+      html: ackHtml,
     });
 
     if (ackError) {
