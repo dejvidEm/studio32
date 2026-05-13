@@ -4,10 +4,16 @@ import AboutusFullimg from "@/app/components/about/aboutus-fullimg";
 import AboutusStats from "@/app/components/about/aboutus-stats";
 import Team from "@/app/components/home/team";
 import Herobanner from "@/app/components/shared/hero-banner";
-import { Metadata } from "next";
-export const metadata: Metadata = {
-    title: "Aboutus | Studio32",
-};
+import type { Metadata } from "next";
+import { staticPageMeta } from "@/lib/page-metadata";
+
+export const metadata: Metadata = staticPageMeta({
+  path: "/about",
+  title: "About us",
+  description:
+    "Spoznajte Studio32 — ako pracujeme, čo ponúkame pri brandingu a webdizajne a prečo s nami spolupracovať.",
+  ogImage: "/images/about-us/banner/aboutus-banner.png",
+});
 
 export default function Page() {
     return (

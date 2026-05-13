@@ -29,6 +29,7 @@
     "react-scroll-parallax": "^3.4.5",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "resend": "^6.12.3",
     "swiper": "^12.1.2",
     "tailwind-merge": "^3.0.2",
     "tw-animate-css": "^1.2.4"

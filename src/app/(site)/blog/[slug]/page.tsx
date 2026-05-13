@@ -2,63 +2,106 @@ import Herobanner from "@/app/components/shared/hero-banner";
 import { getBlogsBySlug } from "@/lib/blogmarkdown";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Image from "next/image";
+import { absoluteUrl, getSiteName } from "@/lib/site";
+import { stripHtmlLite, truncateMetaDescription } from "@/lib/seo-text";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
     params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params }: Props) {
+function fetchBlogSlug(slug: string, fields: string[]) {
+    try {
+        return getBlogsBySlug(slug, fields);
+    } catch {
+        return null;
+    }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
+    const path = `/blog/${slug}`;
+    const blog = fetchBlogSlug(slug, ["title", "detail", "date", "coverImage", "description"]);
+    const siteName = getSiteName();
 
-    const blog = getBlogsBySlug(slug, ["title", "detail", "date", "coverImage", "scrolltoread", "description", "galleryImg", "content"]);
-
-    const siteName = process.env.SITE_NAME || "Studio32";
-    const authorName = process.env.AUTHOR_NAME || "Studio32";
-
-    if (blog) {
-        const metadata = {
-            title: `${blog.title || "Single Post Page"} | ${siteName}`,
-            robots: {
-                index: true,
-                follow: true,
-                nocache: true,
-                googleBot: {
-                    index: true,
-                    follow: false,
-                    "max-video-preview": -1,
-                    "max-image-preview": "large",
-                    "max-snippet": -1,
-                },
-            },
-        };
-
-        return metadata;
-    } else {
+    if (!blog) {
         return {
-            title: "Not Found",
-            description: "No blog article has been found",
-            author: authorName,
-            robots: {
-                index: false,
-                follow: false,
-                nocache: false,
-                googleBot: {
-                    index: false,
-                    follow: false,
-                    "max-video-preview": -1,
-                    "max-image-preview": "large",
-                    "max-snippet": -1,
-                },
-            },
+            title: "404",
+            description: "Článok sa nenašiel.",
+            alternates: { canonical: path },
+            robots: { index: false, follow: false },
         };
     }
+
+    const titleStr = typeof blog.title === "string" ? blog.title : "Blog";
+    const fallbackBody =
+        typeof blog.description === "string" && blog.description.trim().length > 0
+            ? blog.description
+            : typeof blog.detail === "string"
+              ? blog.detail
+              : "";
+    const description = truncateMetaDescription(stripHtmlLite(fallbackBody));
+    const cover =
+        typeof blog.coverImage === "string"
+            ? absoluteUrl(blog.coverImage)
+            : undefined;
+    const dateRaw = typeof blog.date === "string" ? blog.date : undefined;
+    const publishedTime =
+        dateRaw && !Number.isNaN(Date.parse(dateRaw))
+            ? new Date(dateRaw).toISOString()
+            : undefined;
+
+    return {
+        title: titleStr,
+        description,
+        alternates: { canonical: path },
+        openGraph: {
+            type: "article",
+            url: absoluteUrl(path),
+            siteName,
+            title: `${titleStr} | ${siteName}`,
+            description,
+            ...(publishedTime ? { publishedTime } : {}),
+            ...(cover ? { images: [{ url: cover, alt: titleStr }] } : {}),
+        },
+        twitter: {
+            card: cover ? "summary_large_image" : "summary",
+            title: `${titleStr} | ${siteName}`,
+            description,
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+                "max-video-preview": -1,
+            },
+        },
+    };
 }
 
 export default async function Post({ params }: Props) {
     const { slug } = await params;
-    const blog = getBlogsBySlug(slug, ["title", "detail", "date", "coverImage", "scrolltoread", "description", "galleryImg", "content"]);
+    const blog = fetchBlogSlug(slug, [
+        "title",
+        "detail",
+        "date",
+        "coverImage",
+        "scrolltoread",
+        "description",
+        "galleryImg",
+        "content",
+    ]);
 
-    const content = await markdownToHtml(blog.content || "");
+    if (!blog) notFound();
+
+    const content = await markdownToHtml(
+        typeof blog.content === "string" ? blog.content : "",
+    );
 
 
     return (

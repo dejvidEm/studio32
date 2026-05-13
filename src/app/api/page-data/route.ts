@@ -100,24 +100,9 @@ function getTeamData(lang: "en" | "sk") {
     number: "06",
     data: [
       {
-        image: "https://placehold.co/390x470",
-        name: "Martha Finley",
-        position: isSk ? "Kreatívna riaditeľka" : "Creative Director",
-        socialLinks: [
-          { icon: "https://placehold.co/20x20", link: "https://twitter.com" },
-          { icon: "https://placehold.co/20x20", link: "https://www.behance.net/" },
-          { icon: "https://placehold.co/20x20", link: "https://linkedin.com" },
-        ],
-      },
-      {
-        image: "https://placehold.co/390x470",
-        name: "Floyd Miles",
-        position: isSk ? "Marketingový stratég" : "Marketing Strategist",
-        socialLinks: [
-          { icon: "https://placehold.co/20x20", link: "https://twitter.com" },
-          { icon: "https://placehold.co/20x20", link: "https://www.behance.net/" },
-          { icon: "https://placehold.co/20x20", link: "https://linkedin.com" },
-        ],
+        image: "/images/team/david-mikulas.png",
+        name: "Dávid Mikuláš",
+        roleTags: isSk ? ["Vedenie", "Creative Director"] : ["Leadership", "Creative Director"],
       },
     ],
   };

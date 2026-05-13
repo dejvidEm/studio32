@@ -107,7 +107,7 @@ function ProjectsStrip({
 }
 
 /** Seconds per full loop; higher = slower continuous drift */
-const MARQUEE_DURATION_SEC = 50;
+const MARQUEE_DURATION_SEC = 40;
 
 export default function Projectswiper() {
     const { locale } = useLanguage();

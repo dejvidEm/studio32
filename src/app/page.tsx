@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { SHOW_HOME_BLOG_TEASER_AND_NAV } from "@/feature-flags";
+import { SHOW_HOME_BLOG_TEASER_AND_NAV, SHOW_HOME_TEAM } from "@/feature-flags";
 import Aboutus from "./components/home/about-us";
 import Contact from "./components/home/contact";
 import Faq from "./components/home/faq";
@@ -12,7 +12,7 @@ import Team from "./components/home/team";
 import Testimonial from "./components/home/testimonial";
 
 export const metadata: Metadata = {
-    title: "Studio32",
+  alternates: { canonical: "/" },
 };
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
       <Services/>
       <Aboutus/>
       <Testimonial/>
-      <Team teamdataNumber="06"/>
+      {SHOW_HOME_TEAM ? <Team teamdataNumber="06" /> : null}
       <Faq/>
       {SHOW_HOME_BLOG_TEASER_AND_NAV ? <Resources /> : null}
       <Contact contactdataNumber="10"/>

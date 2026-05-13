@@ -2,13 +2,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
 
 const Contact = (props: { contactdataNumber: string }) => {
     const { contactdataNumber } = props;
     const { locale, t } = useLanguage();
     const [submitted, setSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
     const [loader, setLoader] = useState(false);
     const [contactData, setContactData] = useState<any>(null);
     const [formData, setFormData] = useState({
@@ -33,29 +34,37 @@ const Contact = (props: { contactdataNumber: string }) => {
     const reset = () => {
         setFormData({ name: "", email: "", message: "" });
     };
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setSubmitted(false);
+        setSubmitError(false);
         setLoader(true);
 
-        fetch("https://formsubmit.co/ajax/niravjoshi87@gmail.com", {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-                name: formData.name,
-                email: formData.email,
-                message: formData.message,
-            }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setSubmitted(data.success);
-                setLoader(false);
-                reset();
-            })
-            .catch((error) => {
-                console.log(error.message);
-                setLoader(false);
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                }),
             });
+            const data = (await response.json().catch(() => ({}))) as { success?: boolean };
+
+            if (!response.ok || !data.success) {
+                setSubmitError(true);
+                setLoader(false);
+                return;
+            }
+
+            setSubmitted(true);
+            setLoader(false);
+            reset();
+        } catch {
+            setSubmitError(true);
+            setLoader(false);
+        }
     };
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -159,7 +168,9 @@ const Contact = (props: { contactdataNumber: string }) => {
                                         required
                                         className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5"
                                         id="email"
-                                        type="text"
+                                        type="email"
+                                        inputMode="email"
+                                        autoComplete="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
@@ -181,8 +192,11 @@ const Contact = (props: { contactdataNumber: string }) => {
                                         <div className="bg-primary w-fit p-1 sm:p-1.5 rounded-full flex-shrink-0">
                                             <Image src={"/images/Icon/right-check.svg"} alt="right-icon" width={20} height={20} />
                                         </div>
-                                        <p className="text-secondary">{t("successMessage")}</p>
+                                        <p className="text-secondary dark:text-white/90">{t("successMessage")}</p>
                                     </div>
+                                )}
+                                {submitError && (
+                                    <p className="text-sm text-red-600 dark:text-red-400">{t("contactSendError")}</p>
                                 )}
                                 <div>
                                     {!loader ? (

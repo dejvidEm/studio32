@@ -34,6 +34,7 @@ const AccordionTrigger = React.forwardRef<
             )}
             {...props}
         >
+            <div className="min-w-0 flex-1 text-left">{children}</div>
             <div className="accordion-trigger-icon flex shrink-0 items-center justify-center transition-transform duration-[380ms] ease-soft">
                 <Plus
                     className="h-7 w-7 shrink-0 text-secondary sm:h-8 sm:w-8 md:h-9 md:w-9 dark:text-white"
@@ -41,7 +42,6 @@ const AccordionTrigger = React.forwardRef<
                     aria-hidden
                 />
             </div>
-            <div className="min-w-0 flex-1 text-left">{children}</div>
         </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
 ))
