@@ -1,6 +1,5 @@
 import {
   Body,
-  Column,
   Container,
   Head,
   Heading,
@@ -9,7 +8,6 @@ import {
   Img,
   Link,
   Preview,
-  Row,
   Section,
   Text,
 } from "@react-email/components";
@@ -17,31 +15,30 @@ import { Tailwind } from "@react-email/tailwind";
 
 import { footerForAck } from "./footer-for-ack";
 
-/** Hosted mark (PNG) — Gmail-friendly; asset in /public/images/logo/studio32-mark.png */
+/** Mark logo (transparent PNG) — /public/images/logo/studio32-mark.png; copy in src/emails/static for preview. */
 export const CONTACT_ACK_MARK_PATH = "/images/logo/studio32-mark.png";
 
 /**
- * React Email `dev` sets REACT_EMAIL_INTERNAL_* — use copies in `src/emails/static/`
- * with `/static/...` so the preview iframe loads them. Real sends use absolute URLs from `/api/contact`.
+ * React Email `dev` sets REACT_EMAIL_INTERNAL_* — use copy in `src/emails/static/` with `/static/...`.
+ * Real sends use absolute URLs from `/api/contact`.
  */
 const IS_REACT_EMAIL_PREVIEW =
   typeof process.env.REACT_EMAIL_INTERNAL_USER_PROJECT_LOCATION !== "undefined";
 
 const STATIC_MARK_FILE = "studio32-mark.png";
-const STATIC_AVATAR_FILE = "david-mikulas-avatar.png";
 
 const PREVIEW_DEFAULT_SITE = "https://studio32.sk";
+
+/** Native asset 562×500 — keep Img width/height proportional for email clients. */
+const LOGO_MAIN_W = 108;
+const LOGO_MAIN_H = Math.round((500 / 562) * LOGO_MAIN_W);
+const LOGO_FOOTER_W = 64;
+const LOGO_FOOTER_H = Math.round((500 / 562) * LOGO_FOOTER_W);
 
 function defaultLogoSrcForEnvironment(): string {
   return IS_REACT_EMAIL_PREVIEW
     ? `/static/${STATIC_MARK_FILE}`
     : `${PREVIEW_DEFAULT_SITE}${CONTACT_ACK_MARK_PATH}`;
-}
-
-function defaultAvatarSrcForEnvironment(): string {
-  return IS_REACT_EMAIL_PREVIEW
-    ? `/static/${STATIC_AVATAR_FILE}`
-    : `${PREVIEW_DEFAULT_SITE}/images/contact/david-mikulas-avatar.png`;
 }
 
 const copy = {
@@ -56,7 +53,7 @@ const copy = {
       "Ak sú pri vašom dopyte časovo citlivé súvislosti, môžete nás bez ostychu kontaktovať aj nižšie uvedenými kontaktami.",
     contactLabel: "Váš kontakt v štúdiu",
     closing: "S pozdravom,",
-    messageSummaryLabel: "Zobraziť znovu Vašu správu",
+    messageSummaryLabel: "Vaša správa",
     messageEmpty: "(bez textovej správy)",
   },
   en: {
@@ -83,7 +80,6 @@ export type ContactAcknowledgementEmailProps = {
   siteOrigin?: string;
   logoMainSrc?: string;
   logoFooterSrc?: string;
-  avatarSrc?: string;
   managerName?: string;
   managerPosition?: string;
   managerPhone?: string;
@@ -97,7 +93,6 @@ export default function ContactAcknowledgementEmail({
   siteOrigin = PREVIEW_DEFAULT_SITE,
   logoMainSrc = defaultLogoSrcForEnvironment(),
   logoFooterSrc = defaultLogoSrcForEnvironment(),
-  avatarSrc = defaultAvatarSrcForEnvironment(),
   managerName = "Dávid Mikuláš",
   managerPosition = "Creative Director",
   managerPhone = "+421 918 722 720",
@@ -139,9 +134,9 @@ export default function ContactAcknowledgementEmail({
                 <Img
                   src={logoMainSrc}
                   alt="Studio32"
-                  width={108}
-                  height={108}
-                  className="mx-auto h-auto w-[108px]"
+                  width={LOGO_MAIN_W}
+                  height={LOGO_MAIN_H}
+                  className="mx-auto h-auto max-w-[108px]"
                 />
               </Link>
             </Section>
@@ -174,37 +169,22 @@ export default function ContactAcknowledgementEmail({
             </Text>
 
             <Section className="mb-10 rounded-xl border border-solid border-line bg-[#fafcfb] px-5 py-5">
-              <Row>
-                <Column style={{ width: "84px", verticalAlign: "top" }}>
-                  <Img
-                    src={avatarSrc}
-                    alt={managerName}
-                    width={72}
-                    height={72}
-                    className="h-[72px] w-[72px] rounded-full object-cover"
-                  />
-                </Column>
-                <Column className="pl-5" style={{ verticalAlign: "top" }}>
-                  <Text className="m-0 text-[17px] font-semibold leading-tight text-studio">
-                    {managerName}
-                  </Text>
-                  <Text className="m-0 mt-1 text-[14px] leading-snug text-muted">{managerPosition}</Text>
-                  <Text className="m-0 mt-3">
-                    <Link href={`mailto:${managerMailboxDisplay}`} className="text-[14px] font-semibold text-studio underline">
-                      {managerMailboxDisplay}
-                    </Link>
-                  </Text>
-                  <Text className="m-0 mt-1">
-                    {telHref.length > 0 ? (
-                      <Link href={`tel:${telHref}`} className="text-[14px] text-muted underline">
-                        {phoneDisplay}
-                      </Link>
-                    ) : (
-                      <span className="text-[14px] text-muted">{phoneDisplay}</span>
-                    )}
-                  </Text>
-                </Column>
-              </Row>
+              <Text className="m-0 text-[17px] font-semibold leading-tight text-studio">{managerName}</Text>
+              <Text className="m-0 mt-1 text-[14px] leading-snug text-muted">{managerPosition}</Text>
+              <Text className="m-0 mt-3">
+                <Link href={`mailto:${managerMailboxDisplay}`} className="text-[14px] font-semibold text-studio underline">
+                  {managerMailboxDisplay}
+                </Link>
+              </Text>
+              <Text className="m-0 mt-1">
+                {telHref.length > 0 ? (
+                  <Link href={`tel:${telHref}`} className="text-[14px] text-muted underline">
+                    {phoneDisplay}
+                  </Link>
+                ) : (
+                  <span className="text-[14px] text-muted">{phoneDisplay}</span>
+                )}
+              </Text>
             </Section>
 
             <Text className="m-0 mb-10 text-[15px] text-muted">{t.closing}</Text>
@@ -215,9 +195,9 @@ export default function ContactAcknowledgementEmail({
                 <Img
                   src={logoFooterSrc}
                   alt="Studio32"
-                  width={64}
-                  height={64}
-                  className="mx-auto h-auto w-[64px]"
+                  width={LOGO_FOOTER_W}
+                  height={LOGO_FOOTER_H}
+                  className="mx-auto h-auto max-w-[64px]"
                 />
               </Link>
               <Text className="m-0 mt-5 text-center text-[13px] text-muted">{footer.copyright}</Text>

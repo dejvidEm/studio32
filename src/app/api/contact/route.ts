@@ -112,7 +112,6 @@ export async function POST(req: NextRequest) {
       siteOrigin,
       logoMainSrc: absoluteUrl(CONTACT_ACK_MARK_PATH),
       logoFooterSrc: absoluteUrl(CONTACT_ACK_MARK_PATH),
-      avatarSrc: absoluteUrl(STUDIO_CONTACT_MANAGER_PROFILE.image),
       managerName: STUDIO_CONTACT_MANAGER_PROFILE.name,
       managerPosition: STUDIO_CONTACT_MANAGER_PROFILE.position,
       managerPhone: STUDIO_CONTACT_MANAGER_PROFILE.phone,

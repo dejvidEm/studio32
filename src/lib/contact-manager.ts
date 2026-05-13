@@ -1,5 +1,5 @@
 /**
- * Primary contact shown in the contact section and client acknowledgement emails.
+ * Primary contact shown on the website and referenced in acknowledgement emails (name, role, contacts).
  * Keep in sync with any CMS replacement later.
  */
 export const STUDIO_CONTACT_MANAGER_PROFILE = {
