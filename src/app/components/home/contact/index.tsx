@@ -48,6 +48,7 @@ const Contact = (props: { contactdataNumber: string }) => {
                     name: formData.name,
                     email: formData.email,
                     message: formData.message,
+                    locale,
                 }),
             });
             const data = (await response.json().catch(() => ({}))) as { success?: boolean };
