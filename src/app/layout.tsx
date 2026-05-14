@@ -33,7 +33,10 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/images/logo/favicon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/images/logo/favicon.svg", type: "image/svg+xml" },
+    ],
     other: [{ rel: "mask-icon", url: "/images/logo/favicon.svg", color: "#1F2A2E" }],
   },
   openGraph: {
