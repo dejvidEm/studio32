@@ -18,8 +18,18 @@ function pickLocalized(data: Record<string, unknown>, field: string, locale: Pro
   return data[field];
 }
 
+function escapeHtmlAttr(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;");
+}
+
 function processImages(content: string) {
-  return content.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" alt="" />');
+  return content.replace(/!\[(.*?)\]\((.*?)\)/g, (_match, alt, src) => {
+    const safeAlt = escapeHtmlAttr(String(alt).trim());
+    return `<img src="${src}" alt="${safeAlt}" />`;
+  });
 }
 
 export function getProjectsBySlug(slug: string, fields: string[] = [], locale: ProjectLocale = "en") {

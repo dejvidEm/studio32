@@ -1,14 +1,16 @@
 import Herobanner from "@/app/components/shared/hero-banner";
 import TermsAndCondition from "@/app/components/terms-and-condition";
 import type { Metadata } from "next";
+import { STATIC_PAGES } from "@/lib/seo-config";
 import { staticPageMeta } from "@/lib/page-metadata";
 
+const page = STATIC_PAGES.terms;
+
 export const metadata: Metadata = staticPageMeta({
-  path: "/terms-and-conditions",
-  title: "Terms & conditions",
-  description:
-    "Obchodné podmienky používania služieb studio32.sk a štúdia Studio32.",
-  ogImage: "/images/privacy-policy/privacy-policy.png",
+  path: page.path,
+  title: page.title,
+  description: page.description,
+  ogImage: page.ogImage,
 });
 
 export default function Page() {

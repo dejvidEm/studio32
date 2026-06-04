@@ -5,14 +5,16 @@ import AboutusStats from "@/app/components/about/aboutus-stats";
 import Team from "@/app/components/home/team";
 import Herobanner from "@/app/components/shared/hero-banner";
 import type { Metadata } from "next";
+import { STATIC_PAGES } from "@/lib/seo-config";
 import { staticPageMeta } from "@/lib/page-metadata";
 
+const page = STATIC_PAGES.about;
+
 export const metadata: Metadata = staticPageMeta({
-  path: "/about",
-  title: "About us",
-  description:
-    "Spoznajte Studio32 — ako pracujeme, čo ponúkame pri brandingu a webdizajne a prečo s nami spolupracovať.",
-  ogImage: "/images/about-us/banner/aboutus-banner.png",
+  path: page.path,
+  title: page.title,
+  description: page.description,
+  ogImage: page.ogImage,
 });
 
 export default function Page() {

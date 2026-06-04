@@ -1,13 +1,28 @@
 import type { MetadataRoute } from "next";
+import fs from "fs";
+import { join } from "path";
 import { getSiteUrl } from "@/lib/site";
 import { getPostSlugs } from "@/lib/markdown";
 import { getBlogsSlugs } from "@/lib/blogmarkdown";
 
+function lastModifiedForFile(relativePath: string): Date {
+  try {
+    const full = join(process.cwd(), relativePath);
+    return fs.statSync(full).mtime;
+  } catch {
+    return new Date();
+  }
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
-  const modified = new Date();
 
-  const staticPaths: { path: string; priority: number; frequency: MetadataRoute.Sitemap[0]["changeFrequency"] }[] = [
+  const staticPaths: {
+    path: string;
+    priority: number;
+    frequency: MetadataRoute.Sitemap[0]["changeFrequency"];
+    file?: string;
+  }[] = [
     { path: "/", priority: 1, frequency: "weekly" },
     { path: "/about", priority: 0.9, frequency: "monthly" },
     { path: "/contact", priority: 0.9, frequency: "monthly" },
@@ -20,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const urls: MetadataRoute.Sitemap = staticPaths.map(({ path, priority, frequency }) => ({
     url: `${base}${path === "/" ? "" : path}`,
-    lastModified: modified,
+    lastModified: new Date(),
     changeFrequency: frequency,
     priority,
   }));
@@ -30,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const slug = file.replace(/\.mdx$/u, "");
     urls.push({
       url: `${base}/projects/${slug}`,
-      lastModified: modified,
+      lastModified: lastModifiedForFile(`markdown/projects/${file}`),
       changeFrequency: "monthly",
       priority: 0.75,
     });
@@ -41,7 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const slug = file.replace(/\.mdx$/u, "");
     urls.push({
       url: `${base}/blog/${slug}`,
-      lastModified: modified,
+      lastModified: lastModifiedForFile(`markdown/blogs/${file}`),
       changeFrequency: "monthly",
       priority: 0.65,
     });

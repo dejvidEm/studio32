@@ -1,29 +1,26 @@
 import ProjectDetailClient from "@/app/components/projects/ProjectDetailClient";
-import { getProjectsBySlug, type ProjectLocale } from "@/lib/markdown";
-import { truncateMetaDescription, stripHtmlLite } from "@/lib/seo-text";
+import JsonLdScript from "@/app/components/seo/JsonLdScript";
+import { getProjectsBySlug } from "@/lib/markdown";
+import { articlePageMeta } from "@/lib/page-metadata";
+import { buildBreadcrumbJsonLd, buildCreativeWorkJsonLd } from "@/lib/seo-jsonld";
 import { absoluteUrl, getSiteName } from "@/lib/site";
-import { cookies } from "next/headers";
+import { stripHtmlLite, truncateMetaDescription } from "@/lib/seo-text";
 import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-function localeFromCookieStore(cookieLocale: string | undefined): ProjectLocale {
-  return cookieLocale === "en" ? "en" : "sk";
-}
+/** Crawlers get Slovak copy (primary locale); UI locale stays client-side. */
+const SEO_LOCALE = "sk" as const;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const cookieStore = await cookies();
-  const locale = localeFromCookieStore(
-    cookieStore.get("studio32-locale")?.value ?? cookieStore.get("unique-locale")?.value,
-  );
 
   const project = getProjectsBySlug(
     slug,
     ["title", "description", "coverImage"],
-    locale,
+    SEO_LOCALE,
   );
   const siteName = getSiteName();
 
@@ -37,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!titleStr || !project) {
     return {
       title: "404",
-      description: "This project could not be found.",
+      description: "Projekt sa nenašiel.",
       alternates: { canonical: path },
       robots: { index: false, follow: false },
     };
@@ -46,45 +43,61 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     plainFromDesc.length > 0
       ? plainFromDesc
-      : `${titleStr} — case study štúdia ${siteName}.`;
+      : `${titleStr} — case study a realizácia štúdia ${siteName}.`;
 
   const cover =
-    typeof project.coverImage === "string"
-      ? absoluteUrl(project.coverImage)
-      : undefined;
+    typeof project.coverImage === "string" ? project.coverImage : undefined;
 
-  return {
+  return articlePageMeta({
+    path,
     title: titleStr,
     description,
-    alternates: { canonical: path },
-    openGraph: {
-      type: "article",
-      url: absoluteUrl(path),
-      siteName,
-      title: `${titleStr} | ${siteName}`,
-      description,
-      ...(cover ? { images: [{ url: cover, alt: titleStr }] } : {}),
-    },
-    twitter: {
-      card: cover ? "summary_large_image" : "summary",
-      title: `${titleStr} | ${siteName}`,
-      description,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-        "max-video-preview": -1,
-      },
-    },
-  };
+    cover,
+  });
 }
 
 export default async function Post({ params }: Props) {
   const { slug } = await params;
-  return <ProjectDetailClient slug={slug} />;
+  const project = getProjectsBySlug(
+    slug,
+    ["title", "description", "coverImage"],
+    SEO_LOCALE,
+  );
+
+  const titleStr = typeof project?.title === "string" ? project.title : slug;
+  const rawDesc =
+    typeof project?.description === "string" ? project.description.trim() : "";
+  const description =
+    rawDesc.length > 0
+      ? truncateMetaDescription(stripHtmlLite(rawDesc))
+      : `${titleStr} — projekt štúdia ${getSiteName()}.`;
+  const path = `/projects/${slug}`;
+  const pageUrl = absoluteUrl(path);
+  const cover =
+    typeof project?.coverImage === "string"
+      ? absoluteUrl(project.coverImage)
+      : undefined;
+
+  return (
+    <>
+      {project ? (
+        <JsonLdScript
+          data={[
+            buildCreativeWorkJsonLd({
+              title: titleStr,
+              description,
+              url: pageUrl,
+              image: cover,
+            }),
+            buildBreadcrumbJsonLd([
+              { name: "Domov", path: "/" },
+              { name: "Projekty", path: "/projects" },
+              { name: titleStr, path },
+            ]),
+          ]}
+        />
+      ) : null}
+      <ProjectDetailClient slug={slug} />
+    </>
+  );
 }

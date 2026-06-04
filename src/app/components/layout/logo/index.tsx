@@ -8,8 +8,8 @@ const Logo = (props: { sticky: boolean }) => {
     return (
         <Link href="/" className={`inline-flex items-center ${tone} transition-colors duration-[680ms] ease-soft motion-reduce:transition-none`}>
             <span className="sr-only">Studio32</span>
-            <NavMark className="hidden h-10 w-auto shrink-0 xsm:block md:h-12 lg:h-14 xl:h-16" />
-            <NavMark className="block h-9 w-auto shrink-0 xsm:hidden sm:h-10" />
+            <NavMark data-navbar-logo className="hidden h-10 w-auto shrink-0 xsm:block md:h-12 lg:h-14 xl:h-16" />
+            <NavMark data-navbar-logo className="block h-9 w-auto shrink-0 xsm:hidden sm:h-10" />
         </Link>
     );
 };

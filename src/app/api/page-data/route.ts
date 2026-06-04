@@ -19,12 +19,22 @@ function getStatsFactData(lang: "en" | "sk") {
       ? "Meníme chaos na značku s jasnou identitou"
       : "We turn chaos into a brand with a clear identity",
     description: isSk
-      ? "Pri výbere agentúry pre webový dizajn je dôležité zvážiť jej povesť, skúsenosti a špecifické potreby vášho projektu."
-      : "When selecting a web design agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
+      ? "Pri výbere agentúry je dôležité zvážiť jej povesť, skúsenosti a špecifické potreby vášho projektu."
+      : "When selecting an agency, it's essential to consider its reputation, experience, and the specific needs of your project.",
     scoreData: [
-      { number: 40, numberValue: "K", scoreDescp: isSk ? "Ľudia, ktorí spustili svoje weby" : "People who have launched their websites" },
-      { number: 238, scoreDescp: isSk ? "Skúsení profesionáli pripravení pomôcť" : "Experienced professionals ready to assist" },
-      { number: 3, numberValue: "M", scoreDescp: isSk ? "Podpora cez správy a živé konzultácie" : "Support through messages and live consultations" },
+      {
+        number: 100,
+        scoreDescp: isSk ? "Ľudí, ktorí s nami spolupracovali" : "People who have worked with us",
+      },
+      {
+        number: 10,
+        scoreDescp: isSk ? "Skúsených profesionálov v tíme" : "Experienced professionals on the team",
+      },
+      {
+        displayAs: "24/7",
+        showPlus: false,
+        scoreDescp: isSk ? "Podpora pre vaše projekty" : "Support for your projects",
+      },
     ],
   };
 }

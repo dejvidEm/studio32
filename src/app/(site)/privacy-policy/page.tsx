@@ -1,14 +1,16 @@
 import PrivacyPolicy from "@/app/components/privacy-policy";
 import Herobanner from "@/app/components/shared/hero-banner";
 import type { Metadata } from "next";
+import { STATIC_PAGES } from "@/lib/seo-config";
 import { staticPageMeta } from "@/lib/page-metadata";
 
+const page = STATIC_PAGES.privacy;
+
 export const metadata: Metadata = staticPageMeta({
-  path: "/privacy-policy",
-  title: "Privacy policy",
-  description:
-    "Zásady ochrany osobných údajov a používania webu Studio32 v súlade s GDPR.",
-  ogImage: "/images/privacy-policy/privacy-policy.png",
+  path: page.path,
+  title: page.title,
+  description: page.description,
+  ogImage: page.ogImage,
 });
 
 export default function Page() {

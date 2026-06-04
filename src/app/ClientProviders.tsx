@@ -8,6 +8,7 @@ import { LanguageProvider } from "./context/LanguageContext";
 import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
 import ScrollToTop from "./components/scroll-to-top";
+import Preloader from "./components/shared/preloader";
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -28,6 +29,7 @@ export default function ClientProviders({ children }: { children: React.ReactNod
   return (
     <LanguageProvider>
       <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
+        <Preloader />
         {!hideLayout && <Header />}
         {children}
         {!hideLayout && <Footer />}

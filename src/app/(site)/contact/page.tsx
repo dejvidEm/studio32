@@ -1,14 +1,16 @@
 import Contact from "@/app/components/home/contact";
 import Herobanner from "@/app/components/shared/hero-banner";
 import type { Metadata } from "next";
+import { STATIC_PAGES } from "@/lib/seo-config";
 import { staticPageMeta } from "@/lib/page-metadata";
 
+const page = STATIC_PAGES.contact;
+
 export const metadata: Metadata = staticPageMeta({
-  path: "/contact",
-  title: "Contact",
-  description:
-    "Ozvite sa štúdiu Studio32 — konzultácia projektu, ponuka alebo prvý kontakt pre branding a digitál.",
-  ogImage: "/images/contact/banner/contact-banner.png",
+  path: page.path,
+  title: page.title,
+  description: page.description,
+  ogImage: page.ogImage,
 });
 
 export default function Page() {

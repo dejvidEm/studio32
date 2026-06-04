@@ -4,6 +4,19 @@
 import Image from "next/image";
 import { type FormEvent, useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
+import { PillCtaButton } from "@/app/components/shared/navigation-link";
+import { cn } from "@/lib/utils";
+
+const CONTACT_SERVICE_OPTIONS = [
+    { value: "inquiry", labelKey: "contactServiceInquiry" },
+    { value: "branding", labelKey: "contactServiceBranding" },
+    { value: "website", labelKey: "contactServiceWebsite" },
+    { value: "content", labelKey: "contactServiceContent" },
+    { value: "marketing", labelKey: "contactServiceMarketing" },
+] as const;
+
+const fieldClassName =
+    "w-full border-b border-secondary bg-transparent py-3.5 text-secondary focus:border-black focus:outline-none dark:border-white/20 dark:text-white dark:focus:border-white";
 
 const Contact = (props: { contactdataNumber: string }) => {
     const { contactdataNumber } = props;
@@ -15,7 +28,8 @@ const Contact = (props: { contactdataNumber: string }) => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        message: ""
+        service: "inquiry",
+        message: "",
     });
 
     useEffect(() => {
@@ -32,7 +46,7 @@ const Contact = (props: { contactdataNumber: string }) => {
         fetchData()
     }, [locale])
     const reset = () => {
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", service: "inquiry", message: "" });
     };
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -47,6 +61,7 @@ const Contact = (props: { contactdataNumber: string }) => {
                 body: JSON.stringify({
                     name: formData.name,
                     email: formData.email,
+                    service: formData.service,
                     message: formData.message,
                     locale,
                 }),
@@ -155,7 +170,7 @@ const Contact = (props: { contactdataNumber: string }) => {
                                 <div>
                                     <input
                                         required
-                                        className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5"
+                                        className={fieldClassName}
                                         id="name"
                                         type="text"
                                         name="name"
@@ -167,7 +182,7 @@ const Contact = (props: { contactdataNumber: string }) => {
                                 <div>
                                     <input
                                         required
-                                        className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5"
+                                        className={fieldClassName}
                                         id="email"
                                         type="email"
                                         inputMode="email"
@@ -179,8 +194,27 @@ const Contact = (props: { contactdataNumber: string }) => {
                                     />
                                 </div>
                                 <div>
+                                    <label htmlFor="service" className="sr-only">
+                                        {t("contactServiceLabel")}
+                                    </label>
+                                    <select
+                                        required
+                                        id="service"
+                                        name="service"
+                                        value={formData.service}
+                                        onChange={handleChange}
+                                        className={cn(fieldClassName, "cursor-pointer")}
+                                    >
+                                        {CONTACT_SERVICE_OPTIONS.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {t(option.labelKey)}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
                                     <textarea
-                                        className="w-full border-b border-secondary dark:border-white/20 focus:border-black dark:focus:border-white focus:outline-none py-3.5"
+                                        className={fieldClassName}
                                         id="message"
                                         name="message"
                                         value={formData.message}
@@ -201,64 +235,16 @@ const Contact = (props: { contactdataNumber: string }) => {
                                 )}
                                 <div>
                                     {!loader ? (
-                                        <button
+                                        <PillCtaButton
                                             type="submit"
-                                            className="group flex w-full cursor-pointer items-center justify-center gap-4 rounded-full bg-primary transition-all duration-[520ms] ease-soft hover:bg-secondary dark:border dark:border-primary dark:hover:border dark:hover:border-white/30"
-                                        >
-                                            <span className="transform pl-8 text-lg font-bold text-secondary transition-transform duration-[520ms] ease-soft group-hover:translate-x-10 group-hover:text-white">
-                                                {t("submitMessage")}
-                                            </span>
-                                            <svg
-                                                className="py-1 transition-all duration-[520ms] ease-soft group-hover:-translate-x-36 group-hover:rotate-45"
-                                                width="58"
-                                                height="58"
-                                                viewBox="0 0 58 58"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                aria-hidden
-                                            >
-                                                <g filter="url(#filter0_d_contact_submit)">
-                                                    <rect x="3" y="2" width="52" height="52" rx="26" fill="white" />
-                                                    <path
-                                                        d="M24 23H34M34 23V33M34 23L24 33"
-                                                        stroke="#1F2A2E"
-                                                        strokeWidth="1.5"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </g>
-                                                <defs>
-                                                    <filter
-                                                        id="filter0_d_contact_submit"
-                                                        x="0"
-                                                        y="0"
-                                                        width="58"
-                                                        height="58"
-                                                        filterUnits="userSpaceOnUse"
-                                                        colorInterpolationFilters="sRGB"
-                                                    >
-                                                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                                        <feColorMatrix
-                                                            in="SourceAlpha"
-                                                            type="matrix"
-                                                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                                                            result="hardAlpha"
-                                                        />
-                                                        <feOffset dy="1" />
-                                                        <feGaussianBlur stdDeviation="1.5" />
-                                                        <feComposite in2="hardAlpha" operator="out" />
-                                                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0" />
-                                                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_contact_submit" />
-                                                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_contact_submit" result="shape" />
-                                                    </filter>
-                                                </defs>
-                                            </svg>
-                                        </button>
+                                            label={t("submitMessage")}
+                                            transform
+                                        />
                                     ) : (
                                         <button
                                             type="button"
                                             disabled
-                                            className="flex w-full cursor-wait items-center justify-center gap-3 rounded-full bg-primary/25 py-4 dark:bg-white/10"
+                                            className="flex w-fit cursor-wait items-center gap-3 rounded-full bg-primary/25 px-8 py-4 dark:bg-white/10"
                                         >
                                             <div
                                                 className="inline-block size-6 animate-spin rounded-full border-2 border-current border-t-transparent text-secondary dark:text-white"

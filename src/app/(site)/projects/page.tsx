@@ -1,14 +1,16 @@
 import ProjectList from "@/app/components/projects";
 import Herobanner from "@/app/components/shared/hero-banner";
 import type { Metadata } from "next";
+import { STATIC_PAGES } from "@/lib/seo-config";
 import { staticPageMeta } from "@/lib/page-metadata";
 
+const page = STATIC_PAGES.projects;
+
 export const metadata: Metadata = staticPageMeta({
-  path: "/projects",
-  title: "Projects",
-  description:
-    "Vybrané práce štúdia Studio32 — branding, dizajn produktov a weby od konceptu po spustenie.",
-  ogImage: "/images/projects/banner/projects-banner.png",
+  path: page.path,
+  title: page.title,
+  description: page.description,
+  ogImage: page.ogImage,
 });
 
 export default function Page() {

@@ -1,4 +1,8 @@
 import ContactAcknowledgementEmail, { CONTACT_ACK_MARK_PATH } from "@/emails/ContactAcknowledgementEmail";
+import {
+  contactServiceLabel,
+  isContactServiceValue,
+} from "@/lib/contact-services";
 import { STUDIO_CONTACT_MANAGER_PROFILE } from "@/lib/contact-manager";
 import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import { NextRequest, NextResponse } from "next/server";
@@ -64,24 +68,39 @@ export async function POST(req: NextRequest) {
   const name = typeof rec.name === "string" ? rec.name.trim() : "";
   const email = typeof rec.email === "string" ? rec.email.trim().toLowerCase() : "";
   const messageRaw = typeof rec.message === "string" ? rec.message.trim() : "";
+  const serviceRaw = typeof rec.service === "string" ? rec.service.trim() : "";
   const locale: "en" | "sk" = rec.locale === "en" ? "en" : "sk";
 
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!name || !emailOk || name.length > 200 || email.length > 254 || messageRaw.length > 8000) {
+  if (
+    !name ||
+    !emailOk ||
+    !isContactServiceValue(serviceRaw) ||
+    name.length > 200 ||
+    email.length > 254 ||
+    messageRaw.length > 8000
+  ) {
     return NextResponse.json({ success: false, error: "invalid_fields" }, { status: 400 });
   }
 
   const greeting = greetingToken(name);
+  const serviceLabel = contactServiceLabel(serviceRaw, locale);
 
   const from = process.env.RESEND_FROM?.trim() || MAIL_FROM_DEFAULT;
 
-  const plainLead = [`Meno / Name: ${name}`, `Email: ${email}`, `Jazyk / Locale: ${locale}`, "", messageRaw || "(bez správy)"].join(
-    "\n",
-  );
+  const plainLead = [
+    `Meno / Name: ${name}`,
+    `Email: ${email}`,
+    `Služba / Service: ${serviceLabel}`,
+    `Jazyk / Locale: ${locale}`,
+    "",
+    messageRaw || "(bez správy)",
+  ].join("\n");
 
   const htmlLead = `
     <p><strong>Meno / Name:</strong> ${escapeHtml(name)}</p>
     <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
+    <p><strong>Služba / Service:</strong> ${escapeHtml(serviceLabel)}</p>
     <p><strong>Jazyk / Locale:</strong> ${escapeHtml(locale)}</p>
     <hr />
     <p style="white-space:pre-wrap;">${escapeHtml(messageRaw || "(bez správy)")}</p>

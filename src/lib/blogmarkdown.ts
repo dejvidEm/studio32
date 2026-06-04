@@ -21,10 +21,18 @@ export function getBlogsBySlug(slug: string, fields: string[] = []) {
 
   const items: any = {};
 
+  function escapeHtmlAttr(value: string): string {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;");
+  }
+
   function processImages(content: string) {
-    // You can modify this function to handle image processing
-    // For example, replace image paths with actual HTML image tags
-    return content.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" alt="" />');
+    return content.replace(/!\[(.*?)\]\((.*?)\)/g, (_match, alt, src) => {
+      const safeAlt = escapeHtmlAttr(String(alt).trim());
+      return `<img src="${src}" alt="${safeAlt}" />`;
+    });
   }
 
   // Ensure only the minimal needed data is exposed

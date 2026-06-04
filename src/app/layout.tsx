@@ -4,23 +4,38 @@ import "./globals.css";
 import ClientProviders from "./ClientProviders";
 import StructuredData from "./components/seo/StructuredData";
 import { getSiteUrl, getSiteName } from "@/lib/site";
-import { DEFAULT_META_DESCRIPTION_SK } from "@/lib/seo-text";
+import {
+  DEFAULT_META_DESCRIPTION_SK,
+  DEFAULT_META_TITLE_SK,
+  DEFAULT_OG_IMAGE,
+  SITE_KEYWORDS,
+} from "@/lib/seo-text";
 
 const siteUrl = getSiteUrl();
 const siteName = getSiteName();
+const defaultOgImage = new URL(DEFAULT_OG_IMAGE, siteUrl).toString();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} — digitálny dizajn, branding a web`,
+    default: `${siteName} — ${DEFAULT_META_TITLE_SK}`,
     template: `%s | ${siteName}`,
   },
   description: DEFAULT_META_DESCRIPTION_SK,
+  keywords: [...SITE_KEYWORDS],
+  alternates: {
+    canonical: "/",
+  },
   applicationName: siteName,
-  authors: [{ name: siteName }],
+  authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
   publisher: siteName,
   category: "design",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   robots: {
     index: true,
     follow: true,
@@ -45,14 +60,22 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     url: siteUrl,
     siteName,
-    title: `${siteName} — digitálny dizajn, branding a web`,
+    title: `${siteName} — ${DEFAULT_META_TITLE_SK}`,
     description: DEFAULT_META_DESCRIPTION_SK,
-    images: [{ url: "/images/logo/final.svg", width: 512, height: 512, alt: siteName }],
+    images: [
+      {
+        url: defaultOgImage,
+        width: 1200,
+        height: 630,
+        alt: `${siteName} — digitálny dizajn a branding`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} — digitálny dizajn a branding`,
+    title: `${siteName} — ${DEFAULT_META_TITLE_SK}`,
     description: DEFAULT_META_DESCRIPTION_SK,
+    images: [defaultOgImage],
     ...(process.env.NEXT_PUBLIC_TWITTER_HANDLE
       ? { site: `@${process.env.NEXT_PUBLIC_TWITTER_HANDLE.replace(/^@/, "")}` }
       : {}),
@@ -82,6 +105,10 @@ export default function RootLayout({
   return (
     <html lang="sk" suppressHydrationWarning>
       <body className={manrope.className}>
+        <noscript>
+          {/* Without JS the white panel could never roll up, so never let it cover content. */}
+          <style>{`.preloader-root{display:none !important}html.preloader-active,html.preloader-active body{overflow:auto !important}`}</style>
+        </noscript>
         <StructuredData />
         <ClientProviders>{children}</ClientProviders>
       </body>
