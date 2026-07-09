@@ -67,7 +67,7 @@ export const metadata: Metadata = {
         url: defaultOgImage,
         width: 1200,
         height: 630,
-        alt: `${siteName} — digitálny dizajn a branding`,
+        alt: `${siteName} — logo`,
       },
     ],
   },

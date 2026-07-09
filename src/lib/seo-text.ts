@@ -20,8 +20,8 @@ export const SITE_KEYWORDS = [
   "web development",
 ] as const;
 
-/** Default social preview — PNG works reliably; avoid SVG for OG crawlers. */
-export const DEFAULT_OG_IMAGE = "/images/projects/banner/projects-banner.png";
+/** Default social preview — PNG 1200×630; black mark on white for IG/Messenger/link shares. */
+export const DEFAULT_OG_IMAGE = "/images/seo/og-share.png";
 
 export function stripHtmlLite(html: string): string {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
