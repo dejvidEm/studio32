@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL, CONTACT_PHONE } from "@/lib/seo-config";
+import { COMPANY_LEGAL } from "@/lib/company-legal";
 import { DEFAULT_META_DESCRIPTION_SK } from "@/lib/seo-text";
 import { absoluteUrl, getSiteName, getSiteUrl } from "@/lib/site";
 
@@ -21,6 +22,16 @@ export function buildOrganizationJsonLd() {
     description: DEFAULT_META_DESCRIPTION_SK,
     email: CONTACT_EMAIL,
     telephone: CONTACT_PHONE,
+    legalName: COMPANY_LEGAL.name,
+    taxID: COMPANY_LEGAL.dic,
+    vatID: COMPANY_LEGAL.icDph,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: COMPANY_LEGAL.street,
+      postalCode: "075 01",
+      addressLocality: "Trebišov",
+      addressCountry: "SK",
+    },
     areaServed: { "@type": "Country", name: "Slovakia" },
     serviceType: [
       "Branding",

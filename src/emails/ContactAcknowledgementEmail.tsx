@@ -201,8 +201,11 @@ export default function ContactAcknowledgementEmail({
                 />
               </Link>
               <Text className="m-0 mt-5 text-center text-[13px] text-muted">{footer.copyright}</Text>
-              <Text className="m-0 mt-1 mb-8 text-center text-[12px] text-muted">{footer.rightsReserved}</Text>
-              <Text className="m-0 text-center leading-8">
+              <Text className="m-0 mt-1 text-center text-[12px] text-muted">{footer.rightsReserved}</Text>
+              <Text className="m-0 mx-auto mt-4 max-w-[320px] whitespace-pre-line text-center text-[10px] leading-[1.45] text-muted opacity-90">
+                {footer.companyLegal}
+              </Text>
+              <Text className="m-0 mb-8 mt-6 text-center leading-8">
                 {footer.links.map((item, idx) => (
                   <span key={`${item.href}-${item.label}`}>
                     <Link href={item.href} className="text-[13px] font-semibold text-studio underline">

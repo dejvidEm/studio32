@@ -2,7 +2,6 @@
 import AboutusDetail from "@/app/components/about/aboutus-detail";
 import AboutusFullimg from "@/app/components/about/aboutus-fullimg";
 import AboutusStats from "@/app/components/about/aboutus-stats";
-import Team from "@/app/components/home/team";
 import Herobanner from "@/app/components/shared/hero-banner";
 import type { Metadata } from "next";
 import { STATIC_PAGES } from "@/lib/seo-config";
@@ -27,7 +26,6 @@ export default function Page() {
             <AboutusDetail />
             <AboutusStats/>
             <AboutusFullimg/>
-            <Team teamdataNumber="01"/>
         </main>
     );
 };

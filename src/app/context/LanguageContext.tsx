@@ -88,11 +88,12 @@ const translations: Record<Locale, Record<string, string>> = {
       "The team exceeded our expectations with a stunning brand identity.",
     aboutHomeCard1StatPercent: "98.6%",
     aboutHomeCard1StatLabel: "Customer satisfaction",
-    aboutHomeCard1Author: "Wade Warren",
+    aboutHomeCard1Author: "Patrik Pavliščák",
     aboutHomeCard1Company: "Bank of America",
     aboutHomeCard2ProjectsNumber: "30",
     aboutHomeCard2ProjectsLabel: "successful projects",
     aboutHomeCard3BrandsTitle: "Brands served worldwide",
+    aboutHomeCard3BrandsNumber: "23",
     aboutHomeCard3Body:
       "Our global reach allows us to create unique, culturally relevant designs for businesses across different industries.",
     // Navigation
@@ -219,11 +220,12 @@ const translations: Record<Locale, Record<string, string>> = {
       "Tím predčil naše očakávania s výnimočnou vizuálnou identitou značky.",
     aboutHomeCard1StatPercent: "98.6%",
     aboutHomeCard1StatLabel: "Spokojnosť zákazníkov",
-    aboutHomeCard1Author: "Wade Warren",
+    aboutHomeCard1Author: "Patrik Pavliščák",
     aboutHomeCard1Company: "Bank of America",
     aboutHomeCard2ProjectsNumber: "30",
     aboutHomeCard2ProjectsLabel: "úspešných projektov",
     aboutHomeCard3BrandsTitle: "Značiek obsluhovaných celosvetovo",
+    aboutHomeCard3BrandsNumber: "23",
     aboutHomeCard3Body:
       "Náš globálny dosah nám umožňuje tvoriť jedinečné, kultúrne relevantné dizajny pre firmy naprieč odvetviami.",
     back: "Späť",

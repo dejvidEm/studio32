@@ -87,20 +87,23 @@ function getTestimonialData(lang: "en" | "sk") {
     data_1: {
       preTitle: isSk ? "Počúvajte ich" : "Hear from them",
       title: isSk ? "Redesign nášho webu bol bezchybný. Perfektne pochopili našu víziu!" : "Our website redesign was flawless. They understood our vision perfectly!",
-      author: "Albert Flores",
-      company: "MasterCard",
+      author: "Martin Kováč",
+      company: isSk ? "Zakladateľ" : "Founder",
+      avatar: "/images/testimonial/testimonial_1.png",
     },
     data_2: {
       preTitle: isSk ? "Počúvajte ich" : "Hear from them",
       title: isSk ? "Od konceptu po realizáciu dodali vynikajúce výsledky. Vrelo odporúčam!" : "From concept to execution, they delivered outstanding results. Highly recommend their expertise!",
-      author: "Robert Fox",
-      company: "Mitsubishi",
+      author: "Petra Malíková",
+      company: "Marketing Manager",
+      avatar: "/images/testimonial/testimonial_2.png",
     },
     data_3: {
       preTitle: isSk ? "Počúvajte ich" : "Hear from them",
       title: isSk ? "Veľmi plynulý proces s úžasnými výsledkami. Vrelo odporúčam!" : "Super smooth process with incredible results. highly recommend!",
-      author: "Jenny Wilson",
-      company: "Pizza Hut",
+      author: "Tomáš Hrušička",
+      company: "CEO",
+      avatar: "/images/testimonial/testimonial_3.png",
     },
   };
 }
@@ -162,16 +165,38 @@ function getPricingData(lang: "en" | "sk") {
 
 function getFaqData(lang: "en" | "sk") {
   const isSk = lang === "sk";
-  const ans = isSk
-    ? "Áno, poskytujeme podporu po spustení a balíčky údržby pre klientov potrebujúcich pravidelné aktualizácie."
-    : "Yes, we provide post-launch support to ensure smooth implementation and offer ongoing maintenance packages for clients needing regular updates or technical assistance.";
   return {
     data: [
-      { faq_que: isSk ? "Aké služby vaša agentúra ponúka?" : "What services does your agency offer?", faq_ans: ans },
-      { faq_que: isSk ? "Ako dlho zvyčajne trvá projekt?" : "How long does a typical project take?", faq_ans: ans },
-      { faq_que: isSk ? "Ponúkate vlastné dizajny?" : "Do you offer custom designs?", faq_ans: ans },
-      { faq_que: isSk ? "Aká je cena projektu?" : "What's the cost of a project?", faq_ans: ans },
-      { faq_que: isSk ? "Poskytujete podporu po dokončení projektu?" : "Do you provide ongoing support after project completion?", faq_ans: ans },
+      {
+        faq_que: isSk ? "Aké služby vaša agentúra ponúka?" : "What services does your agency offer?",
+        faq_ans: isSk
+          ? "Branding, webstránky, tvorba obsahu a marketing. Každý projekt riešime na mieru — podľa cieľov, nie podľa šablóny."
+          : "Branding, websites, content creation, and marketing. Every project is tailored to your goals, not a one-size-fits-all package.",
+      },
+      {
+        faq_que: isSk ? "Ako dlho zvyčajne trvá projekt?" : "How long does a typical project take?",
+        faq_ans: isSk
+          ? "Závisí od rozsahu. Jednoduchší web zvyčajne 3–6 týždňov, komplexnejší brand alebo produkt 6–12 týždňov. Presný termín upresníme v ponuke."
+          : "It depends on scope. A straightforward website is usually 3–6 weeks; a fuller brand or product project 6–12 weeks. We confirm the timeline in your proposal.",
+      },
+      {
+        faq_que: isSk ? "Ponúkate vlastné dizajny?" : "Do you offer custom designs?",
+        faq_ans: isSk
+          ? "Áno. Dizajn vytvárame od nuly podľa vašej značky, cieľovej skupiny a toho, čo má web alebo vizuál riešiť."
+          : "Yes. We design from scratch around your brand, audience, and what the site or visuals need to achieve.",
+      },
+      {
+        faq_que: isSk ? "Aká je cena projektu?" : "What's the cost of a project?",
+        faq_ans: isSk
+          ? "Závisí od rozsahu a zadania. Orientačne web od 699 €, rozsiahlejšie projekty po dohode. Po krátkom brífingu pripravíme konkrétnu ponuku."
+          : "It depends on scope and requirements. Websites start from around €699; larger projects are quoted individually. After a short brief, we send a clear proposal.",
+      },
+      {
+        faq_que: isSk ? "Poskytujete podporu po dokončení projektu?" : "Do you provide ongoing support after project completion?",
+        faq_ans: isSk
+          ? "Áno. Po odovzdaní ponúkame údržbu, drobné úpravy a technickú podporu — podľa dohodnutého balíčka alebo ad hoc."
+          : "Yes. After launch we offer maintenance, small updates, and technical support — on a retainer or as needed.",
+      },
     ],
   };
 }
@@ -188,7 +213,7 @@ function getAboutusStats(lang: "en" | "sk") {
   const isSk = lang === "sk";
   return [
     { number: 45, postfix: "+", title: isSk ? "Prítomnosť na globálnych trhoch" : "Presence in global markets", descp: isSk ? "Rozširujeme dosah s lokalizovanou expertízou a celosvetovým dopadom." : "Expanding reach across international regions with localized expertise and worldwide impact." },
-    { number: 15, prefix: "$", postfix: "M", title: isSk ? "Strategické investície" : "In strategic investments", descp: isSk ? "Poháňame rast s kurátorovanými partnerstvami a výkonnými iniciatívami." : "Driving growth with curated partnerships and high-performing, audience-driven initiatives." },
+    { number: 30, postfix: "+", title: isSk ? "Dokončených projektov" : "Projects delivered", descp: isSk ? "Branding, web aj obsah — každý projekt riešime na mieru, s dôrazom na detail a funkčnosť." : "Branding, web, and content — every project tailored with attention to detail and usability." },
     { number: 158, postfix: "+", title: isSk ? "Dôveryhodné spolupráce značiek" : "Trusted brand collaborations", descp: isSk ? "Formujeme priemyselné diskusie cez inovácie, tvorivosť a trvalý vplyv." : "Shaping industry conversations through innovation, creativity, and lasting influence." },
   ];
 }

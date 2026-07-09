@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
 import NavMark from "../logo/NavMark";
+import { companyLegalInline } from "@/lib/company-legal";
 
 function FooterLink({
     href,
@@ -152,9 +153,14 @@ const Footer = () => {
                         </div>
 
                         {footerData?.copyright && (
-                            <p className="w-full text-center text-base font-light text-white/70">
-                                {footerData.copyright}
-                            </p>
+                            <div className="flex w-full flex-col items-center gap-1.5">
+                                <p className="m-0 text-center text-base font-light text-white/70">
+                                    {footerData.copyright}
+                                </p>
+                                <span className="text-center text-[9px] leading-snug text-white/50 sm:text-[10px]">
+                                    {companyLegalInline(locale)}
+                                </span>
+                            </div>
                         )}
                     </div>
                 </div>

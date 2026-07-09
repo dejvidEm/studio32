@@ -1,3 +1,5 @@
+"use client";
+
 function TermsAndCondition() {
     return (
         <section>

@@ -1,25 +1,10 @@
 "use client";
 import Image from "next/image";
 import StarRating from "../../shared/star-rating";
-import { useEffect, useState } from "react";
 import { useLanguage } from "@/app/context/LanguageContext";
 
 function Aboutus() {
-    const { locale, t } = useLanguage();
-    const [avatarList, setAvatarList] = useState<any>(null);
-    useEffect(() => {
-          const fetchData = async () => {
-            try {
-              const res = await fetch(`/api/page-data?lang=${locale}`)
-              if (!res.ok) throw new Error('Failed to fetch')
-              const data = await res.json()
-              setAvatarList(data?.avatarList)
-            } catch (error) {
-              console.error('Error fetching about-us:', error)
-            }
-          }
-          fetchData()
-        }, [locale])
+    const { t } = useLanguage();
 
     return (
         <section className="py-20 md:py-40 dark:bg-darkblack">
@@ -53,13 +38,7 @@ function Aboutus() {
                                     <h2 className="dark:text-secondary">{t("aboutHomeCard1StatPercent")}</h2>
                                     <p className="text-base text-secondary/70">{t("aboutHomeCard1StatLabel")}</p>
                                 </div>
-                                <div className="flex items-center gap-2 lg:gap-5 pt-5">
-                                    <Image src={"/images/home/aboutusIndex/avatar.svg"} alt="Image" width={64} height={64} />
-                                    <div>
-                                        <p className="font-medium dark:text-secondary">{t("aboutHomeCard1Author")}</p>
-                                        <p className="text-base text-secondary/70">{t("aboutHomeCard1Company")}</p>
-                                    </div>
-                                </div>
+                                <p className="pt-5 font-medium dark:text-secondary">{t("aboutHomeCard1Author")}</p>
                             </div>
                             <div className="absolute bottom-0 right-0">
                                 <Image src={"/images/home/aboutusIndex/bg-ellipse.svg"} alt="image" width={200} height={200} />
@@ -103,20 +82,11 @@ function Aboutus() {
                                     </h2>
                                     <p className="text-base text-white/70">{t("aboutHomeCard2ProjectsLabel")}</p>
                                 </div>
-                                <div>
-                                    <ul className='avatar flex flex-row items-center'>
-                                        {avatarList?.map((items:any, index:any) => (
-                                            <li key={index} className='-mr-2 z-1 avatar-hover:ml-2'>
-                                                <Image src={items.image} alt='Image' width={44} height={44} quality={100} className='rounded-full border-2 border-secondary' />
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                         <div className="relative overflow-hidden p-5 2xl:p-7 border border-secondary/12 dark:border-white/30 flex flex-col justify-between gap-8 md:gap-0">
                             <div className="relative z-10">
-                                <h2 className="text-secondary dark:text-white">238+</h2>
+                                <h2 className="text-secondary dark:text-white">{t("aboutHomeCard3BrandsNumber")}+</h2>
                                 <p className="text-secondary/70 dark:text-white/70">{t("aboutHomeCard3BrandsTitle")}</p>
                             </div>
                             <div className="flex flex-col gap-4 relative z-10">
