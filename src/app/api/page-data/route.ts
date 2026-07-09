@@ -176,8 +176,8 @@ function getFaqData(lang: "en" | "sk") {
       {
         faq_que: isSk ? "Ako dlho zvyčajne trvá projekt?" : "How long does a typical project take?",
         faq_ans: isSk
-          ? "Závisí od rozsahu. Jednoduchší web zvyčajne 3–6 týždňov, komplexnejší brand alebo produkt 6–12 týždňov. Presný termín upresníme v ponuke."
-          : "It depends on scope. A straightforward website is usually 3–6 weeks; a fuller brand or product project 6–12 weeks. We confirm the timeline in your proposal.",
+          ? "Každý projekt je individuálny — závisí od rozsahu, spätnej väzby a toho, čo presne potrebujete. Termín vždy dohodneme vopred v ponuke. Pracujeme efektívne a v čo najkratšom čase, ale nikdy na úkor kvality."
+          : "Every project is different — it depends on scope, feedback, and what you need. We always agree on a timeline upfront in the proposal. We work efficiently and as quickly as we can, but never at the expense of quality.",
       },
       {
         faq_que: isSk ? "Ponúkate vlastné dizajny?" : "Do you offer custom designs?",
